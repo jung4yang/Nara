@@ -1,0 +1,54 @@
+/* ============================================================
+   animations.css — React 전환용 모션 보강
+   기존 style.css는 그대로 두고, 인터랙션 디테일만 추가합니다.
+============================================================ */
+
+/* 히어로 배경 그리드 천천히 드리프트 */
+.hero-fallback-grid {
+  animation: gridDrift 18s linear infinite;
+}
+@keyframes gridDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 60px 60px; }
+}
+
+/* 버튼 클릭 피드백 */
+.btn-start, .btn-next, .btn-back, .btn-hiw, .btn-secondary,
+.sb-btn, .btn-regen, .btn-gen-video, .btn-export {
+  will-change: transform;
+}
+.btn-start:active, .btn-next:active { transform: scale(0.97); }
+
+/* 카드류 입체감 (hover시 살짝 떠오름 + 그림자) */
+.branch-card, .format-card, .genre-card {
+  will-change: transform;
+}
+.branch-card:hover, .format-card:hover {
+  box-shadow: 0 16px 40px rgba(159,182,209,0.18);
+}
+
+/* 스토리보드 카드 - liked/disliked 펄스 */
+@keyframes likePulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.sb-card.liked .sb-img { animation: likePulse 0.35s ease; }
+
+/* progress dot 전환 부드럽게 */
+.dot, .q-dot { will-change: transform, background; }
+
+/* 포커스 비저블 (접근성) */
+button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* 모션 최소화 환경 존중 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
