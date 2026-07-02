@@ -4,8 +4,8 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { STORYBOARD, STORYBOARD_CINEMATIC, delay } from '../data/content';
 
 // 숏폼용 (5장 세로)
-const IMAGES     = ['/sb1.png', '/sb2.png', '/sb3.png', '/sb4.png', '/sb5.png'];
-const ALT_IMAGES = [null, null, '/sb3_alt.png', null, null];
+const IMAGES     = ['/short1.png', '/short2.png', '/short3.png', '/short4.png', '/short5.png'];
+const ALT_IMAGES = [null, '/short2_alt.png', '/short3_alt.png', null, null];
 
 // 시네마틱용 (9장 가로) - 이미지 없으면 fallback emoji 표시
 const CINEMATIC_IMAGES = [

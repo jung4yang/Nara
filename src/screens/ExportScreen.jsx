@@ -16,7 +16,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
 
   const downloadVideo = () => {
     const a = document.createElement('a');
-    a.href = '/finalvideo.mp4';
+    a.href = '/short_result.mp4';
     a.download = 'NARA_trailer.mp4';
     a.click();
   };
@@ -53,7 +53,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={() => setVideoError(true)}
             >
-              <source src="/finalvideo.mp4" type="video/mp4" />
+              <source src="/short_result.mp4" type="video/mp4" />
             </video>
           ) : (
             <>
