@@ -31,6 +31,8 @@ import DetailPage from './screens/publisher/DetailPage';
 import ProfilePage from './screens/publisher/ProfilePage';
 import FavoritesPage from './screens/publisher/FavoritesPage';
 import { Toast } from './screens/publisher/Toast';
+import LoginModal from './screens/publisher/LoginModal';
+import ShortsViewer from './screens/publisher/ShortsViewer';
 
 // 0:genre 1:format 2:branch 3:questions 4:synopsis
 // 5:upload 6:storyboard 7:clipreview 8:export
@@ -61,6 +63,14 @@ export default function App() {
   const goDetail = (id) => { setPubGameId(id); setPubView('detail'); setView('pub'); };
   const goProfile = (id) => { setPubDevId(id); setPubView('profile'); setView('pub'); };
   const goFavorites = () => { setPubView('favorites'); setView('pub'); };
+
+  // 로그인 상태
+  const [user, setUser] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showShorts, setShowShorts] = useState(false);
+  const [shortsIndex, setShortsIndex] = useState(0);
+
+  const openShorts = (index = 0) => { setShortsIndex(index); setShowShorts(true); };
 
   const [overlay, setOverlay] = useState({ show: false, text: '', sub: '' });
   const showOverlay = (text, sub) => setOverlay({ show: true, text, sub });
@@ -179,6 +189,10 @@ export default function App() {
         onStart={startApp}
         view={view === 'pub' ? pubView : view}
         onGoFeed={goFeed}
+        onLoginClick={() => setShowLogin(true)}
+        user={user}
+        onProfileClick={() => goProfile('dev_001')}
+        
       />
       <Overlay show={overlay.show} text={overlay.text} sub={overlay.sub} />
 
@@ -286,7 +300,7 @@ export default function App() {
             <button className={`rail-icon${pubView === 'favorites' ? ' active' : ''}`} onClick={goFavorites} title="관심 게임">♡</button>
           </aside>
           <main className="main">
-            {pubView === 'feed' && <FeedPage onDetail={goDetail} />}
+            {pubView === 'feed' && <FeedPage onDetail={goDetail} onOpenShorts={openShorts} />}
             {pubView === 'detail' && <DetailPage gameId={pubGameId} onBack={goFeed} onProfile={goProfile} />}
             {pubView === 'profile' && <ProfilePage devId={pubDevId} onBack={goFeed} onDetail={goDetail} />}
             {pubView === 'favorites' && <FavoritesPage onBack={goFeed} onDetail={goDetail} />}
@@ -294,6 +308,8 @@ export default function App() {
         </div>
       )}
       <Toast />
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} onLogin={(u) => setUser(u)} />}
+      {showShorts && <ShortsViewer initialIndex={shortsIndex} onClose={() => setShowShorts(false)} />}
     </>
   );
 }

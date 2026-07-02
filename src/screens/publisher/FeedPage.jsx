@@ -5,7 +5,16 @@ import { filterGames, getGenreOptions } from './publisher';
 const PLATFORM_OPTIONS = ['전체', 'PC', '모바일', '콘솔'];
 const SORT_OPTIONS = ['최신순', '관심순'];
 
-export default function FeedPage({ onDetail }) {
+// 숏폼 샘플 데이터
+const SHORTS = [
+  { id: 's1', title: 'Shadow of Aria', studio: 'DeepLight', duration: '0:30', colorClass: 'color-purple' },
+  { id: 's2', title: 'Neon Blade', studio: 'PixelForge', duration: '0:20', colorClass: 'color-cyan' },
+  { id: 's3', title: 'Whisper Forest', studio: 'MoonSeed', duration: '0:25', colorClass: 'color-green' },
+  { id: 's4', title: 'Void Runner', studio: 'StarBurst', duration: '0:15', colorClass: 'color-red' },
+  { id: 's5', title: 'Crystal Cave', studio: 'GemStudio', duration: '0:35', colorClass: 'color-purple' },
+];
+
+export default function FeedPage({ onDetail, onOpenShorts }) {
   const [genre, setGenre] = useState('전체');
   const [platform, setPlatform] = useState('전체');
   const [sort, setSort] = useState('최신순');
@@ -25,6 +34,31 @@ export default function FeedPage({ onDetail }) {
 
   return (
     <div className="pub-wrap">
+      {/* 숏폼 섹션 - 피드 상단 가로 스크롤 */}
+      <div className="shorts-strip-section">
+        <div className="shorts-strip-head">
+          <span className="shorts-strip-label">🎬 숏폼</span>
+          <span className="shorts-strip-sub">클릭해서 감상하세요</span>
+        </div>
+        <div className="shorts-strip">
+          {SHORTS.map((short, i) => (
+            <div
+              key={short.id}
+              className={`shorts-strip-card ${short.colorClass}`}
+              onClick={() => onOpenShorts(i)}
+            >
+              <div className="shorts-strip-play">▶</div>
+              <div className="shorts-strip-duration">{short.duration}</div>
+              <div className="shorts-strip-info">
+                <div className="shorts-strip-title">{short.title}</div>
+                <div className="shorts-strip-studio">{short.studio}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 필터 */}
       <div className="filter-row filter-row-top">
         <label className="filter-field filter-field-search">
           <span>검색</span>
@@ -49,6 +83,8 @@ export default function FeedPage({ onDetail }) {
           </select>
         </label>
       </div>
+
+      {/* 게임 카드 그리드 */}
       <section className="game-grid">
         {games.map((game) => <GameCard key={game.id} game={game} onDetail={onDetail} />)}
       </section>
