@@ -289,6 +289,7 @@ export default function App() {
                 onBack={() => goTo(6)}
                 onEdit={goToClipReview}
                 onRestart={goLanding}
+                onGoFeed={goFeed}
               />
             )}
           </AnimatePresence>
