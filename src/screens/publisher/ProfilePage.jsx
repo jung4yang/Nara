@@ -33,9 +33,17 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
         <button className="btn" onClick={onBack}><ArrowLeft size={16} style={{ verticalAlign: '-3px', marginRight: 4 }} />피드로</button>
       </div> */}
       <section className="profile-hero">
-        <div className="profile-cover" />
+        {dev.cover ? (
+          <div className="profile-cover" style={{ backgroundImage: `url(${dev.cover})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        ) : (
+          <div className="profile-cover" />
+        )}
         <div className="profile-content">
-          <div className="avatar">{dev.name.charAt(0)}</div>
+          {dev.avatar ? (
+            <img className="avatar avatar-img" src={dev.avatar} alt={dev.name} />
+          ) : (
+            <div className="avatar">{dev.name.charAt(0)}</div>
+          )}
           <div className="profile-header">
             <div>
               <h2 className="page-title" style={{ fontSize: 30, marginBottom: 4 }}>{dev.name}</h2>

@@ -95,8 +95,8 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
           )}
         </div>
         <aside className="panel detail-side">
+          <div className={`detail-developer-cover ${game.colorClass}`} />
           <div className="panel-body">
-            <div className={`detail-developer-cover ${game.colorClass}`} />
             <div className="detail-developer-content">
               <span className="detail-developer-avatar">{(developer?.name ?? game.studio).slice(0, 1)}</span>
               <div className="detail-developer-copy">
