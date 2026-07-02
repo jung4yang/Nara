@@ -11,7 +11,7 @@ const SHORTS = [
   { id: 's1', title: 'Shadow of Aria', studio: 'DeepLight', duration: '0:30', colorClass: 'color-purple', thumbnail: '/short4.png', video: '/short_result.mp4' },
   { id: 's2', title: 'Neon Blade', studio: 'PixelForge', duration: '0:20', colorClass: 'color-cyan', thumbnail: '/pub_short2.png', video: '/pub_short2.mp4' },
   { id: 's3', title: 'Whisper Forest', studio: 'MoonSeed', duration: '0:25', colorClass: 'color-green', thumbnail: '/pub_short3.png', video: null },
-  { id: 's4', title: 'Void Runner', studio: 'StarBurst', duration: '0:15', colorClass: 'color-red', thumbnail: null, video: null },
+  { id: 's4', title: 'Void Runner', studio: 'StarBurst', duration: '0:15', colorClass: 'color-red', thumbnail: '/pub_short4.png', video: null },
   { id: 's5', title: 'Crystal Cave', studio: 'GemStudio', duration: '0:35', colorClass: 'color-purple', thumbnail: '/pub_short5.png', video: null },
 ];
 
