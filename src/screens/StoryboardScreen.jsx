@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Moon, Zap, Sword, Sparkles, Clapperboard, MoonStar, Flame, Swords, Trophy, ArrowRight } from 'lucide-react';
 import { STORYBOARD, STORYBOARD_CINEMATIC, delay } from '../data/content';
+import { useLang } from '../i18n';
 
 // 숏폼용 (5장 세로)
 const IMAGES     = ['/short1.png', '/short2.png', '/short3.png', '/short4.png', '/short5.png'];
@@ -17,6 +18,8 @@ const CINEMATIC_IMAGES = [
 const FALLBACK_ICONS = [Moon, Zap, Sword, Sparkles, Clapperboard, MoonStar, Flame, Swords, Trophy];
 
 export default function StoryboardScreen({ selectedGenre, selectedFormat, onRegenAll, onGenerateVideo, regenKey }) {
+  const { t } = useLang();
+  const sb = t.flow.storyboard;
   const isCinematic = selectedFormat === 'cinematic';
   const data    = isCinematic
     ? (STORYBOARD_CINEMATIC[selectedGenre] || STORYBOARD_CINEMATIC.RPG)
@@ -96,14 +99,12 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
       <div className="sb-wrap">
         <div className="sb-header">
           <div className="sb-title-area">
-            <div className="sb-title">이미지 검토</div>
+            <div className="sb-title">{sb.title}</div>
             <div className="sb-desc">
-              {isCinematic
-                ? '시네마틱 트레일러용 9장 장면입니다. 마음에 들지 않으면 싫어요를 눌러주세요.'
-                : '숏폼 트레일러용 5장 장면입니다. 마음에 들지 않으면 싫어요를 눌러주세요.'}
+              {isCinematic ? sb.descCine : sb.descShort}
             </div>
           </div>
-          <div className="sb-count">{liked.size} / {data.length} 확정</div>
+          <div className="sb-count">{liked.size} / {data.length} {sb.confirm}</div>
         </div>
 
         <div style={gridStyle}>
@@ -130,7 +131,7 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8, background: 'linear-gradient(135deg,#1e1a3a,#2d1f4a)' }}>
                       {(() => { const Ic = FALLBACK_ICONS[i] || Clapperboard; return <Ic size={isCinematic ? 40 : 32} style={{ color: 'var(--text3)' }} />; })()}
-                      <span style={{ fontSize: 11, color: 'var(--text3)' }}>이미지 없음</span>
+                      <span style={{ fontSize: 11, color: 'var(--text3)' }}>{sb.noImage}</span>
                     </div>
                   )}
                   <AnimatePresence>
@@ -140,7 +141,7 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
                         style={{ position: 'absolute', inset: 0, background: 'rgba(13,13,20,0.88)', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 10 }}
                       >
                         <div style={{ width: 28, height: 28, border: '2px solid rgba(159,182,209,0.3)', borderTopColor: 'var(--accent)', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
-                        <span style={{ fontSize: 11, color: 'var(--accent2)', letterSpacing: 0.5 }}>수정 중...</span>
+                        <span style={{ fontSize: 11, color: 'var(--accent2)', letterSpacing: 0.5 }}>{sb.editing}</span>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -150,18 +151,18 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
 
               <div style={{ padding: '8px 10px', fontSize: 11, color: 'var(--text2)', lineHeight: 1.4 }}>{d.d}</div>
               <div className="sb-actions">
-                <div className={`sb-btn like ${liked.has(i) ? 'liked' : ''}`} onClick={() => toggleLike(i)} title="좋아요"><ThumbsUp size={15} strokeWidth={2} /></div>
-                <div className={`sb-btn dislike ${disliked.has(i) ? 'disliked' : ''}`} onClick={(e) => openDislike(i, e)} title="수정 요청"><ThumbsDown size={15} strokeWidth={2} /></div>
+                <div className={`sb-btn like ${liked.has(i) ? 'liked' : ''}`} onClick={() => toggleLike(i)} title={sb.like}><ThumbsUp size={15} strokeWidth={2} /></div>
+                <div className={`sb-btn dislike ${disliked.has(i) ? 'disliked' : ''}`} onClick={(e) => openDislike(i, e)} title={sb.dislike}><ThumbsDown size={15} strokeWidth={2} /></div>
               </div>
             </motion.div>
           ))}
         </div>
-        <div className="sb-footer-hint">모든 컷에 좋아요를 누르면 영상 생성으로 넘어가요.</div>
+        <div className="sb-footer-hint">{sb.footerHint}</div>
       </div>
 
       <div className="sb-float-btns">
-        <motion.button className="btn-regen" onClick={onRegenAll} whileTap={{ scale: 0.96 }}>전체 재생성</motion.button>
-        <motion.button className="btn-gen-video" onClick={onGenerateVideo} disabled={!allLiked} whileHover={allLiked ? { scale: 1.03 } : {}} whileTap={allLiked ? { scale: 0.97 } : {}}>영상 생성 <ArrowRight size={15} /></motion.button>
+        <motion.button className="btn-regen" onClick={onRegenAll} whileTap={{ scale: 0.96 }}>{sb.regenAll}</motion.button>
+        <motion.button className="btn-gen-video" onClick={onGenerateVideo} disabled={!allLiked} whileHover={allLiked ? { scale: 1.03 } : {}} whileTap={allLiked ? { scale: 0.97 } : {}}>{sb.genVideo} <ArrowRight size={15} /></motion.button>
       </div>
 
       <AnimatePresence>
@@ -192,18 +193,18 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
                 <div style={{ position: 'absolute', top: 21, right: -6, width: 0, height: 0, borderTop: '7px solid transparent', borderBottom: '7px solid transparent', borderLeft: '7px solid var(--surface)' }} />
               </>
             )}
-            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>어떤 점을 수정할까요?</div>
-            <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 12, lineHeight: 1.5 }}>원하는 분위기, 표정, 배경, 동작, 색감 등을 적어주세요.</div>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>{sb.panelTitle}</div>
+            <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 12, lineHeight: 1.5 }}>{sb.panelDesc}</div>
             <textarea
               style={{ width: '100%', background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 8, padding: '10px 12px', color: 'var(--text)', fontSize: 13, outline: 'none', fontFamily: 'inherit', resize: 'none', height: 90, marginBottom: 10 }}
-              placeholder="예: 얼굴 위주의 이미지로 바꿔주세요."
+              placeholder={sb.panelPlaceholder}
               value={panelValue}
               onChange={(e) => setPanelValue(e.target.value)}
               autoFocus
             />
             <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={closePanel} style={{ padding: '8px 14px', background: 'transparent', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 12, cursor: 'pointer' }}>닫기</button>
-              <button onClick={applyDislike} style={{ flex: 1, padding: '8px 14px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: 8, color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(10px)' }}>재생성하기</button>
+              <button onClick={closePanel} style={{ padding: '8px 14px', background: 'transparent', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text2)', fontSize: 12, cursor: 'pointer' }}>{sb.close}</button>
+              <button onClick={applyDislike} style={{ flex: 1, padding: '8px 14px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: 8, color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(10px)' }}>{sb.regenerate}</button>
             </div>
           </motion.div>
         )}

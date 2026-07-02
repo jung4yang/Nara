@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Play, Heart } from 'lucide-react';
 import { badgeTone, toggleFavorite, isFavorite } from './publisher';
 import { showToast } from './Toast';
+import { useLang } from '../../i18n';
 
 export default function GameCard({ game, thumbHeight, onDetail }) {
+  const { t, tw } = useLang();
   const [saved, setSaved] = useState(isFavorite(game.id));
 
   function handleFavorite(e) {
     e.stopPropagation();
     const added = toggleFavorite(game.id);
     setSaved(added);
-    showToast(added ? '관심 게임에 저장했습니다.' : '관심 게임에서 제거했습니다.');
+    showToast(added ? t.toast.saved : t.toast.removed);
   }
 
   const thumbStyle = undefined;
@@ -25,8 +27,8 @@ export default function GameCard({ game, thumbHeight, onDetail }) {
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         )}
-        <span className="badge thumb-badge-tl">{game.platformBadge}</span>
-        <span className={`badge ${badgeTone(game.progressTone)} thumb-badge-br`}>{game.progress}</span>
+        <span className="badge thumb-badge-tl">{tw(game.platformBadge)}</span>
+        <span className={`badge ${badgeTone(game.progressTone)} thumb-badge-br`}>{tw(game.progress)}</span>
         <div className="play-btn"><Play size={20} fill="currentColor" /></div>
       </div>
       <div className="card-body">
@@ -38,7 +40,7 @@ export default function GameCard({ game, thumbHeight, onDetail }) {
         </div>
         <p className="card-sub">{game.studio}</p>
         <div className="chip-wrap">
-          {game.genre.map((g) => <span key={g} className="chip">{g}</span>)}
+          {game.genre.map((g) => <span key={g} className="chip">{tw(g)}</span>)}
         </div>
       </div>
     </article>

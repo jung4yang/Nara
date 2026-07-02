@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Play, Heart } from 'lucide-react';
 import { getGames, getFavorites, toggleFavorite } from './publisher';
 import { showToast } from './Toast';
+import { useLang } from '../../i18n';
 
 export default function FavoritesPage({ onBack, onDetail }) {
+  const { t, tw } = useLang();
   const [favIds, setFavIds] = useState(() => getFavorites());
   const favGames = getGames().filter((g) => favIds.includes(g.id));
 
   function handleRemove(id) {
     toggleFavorite(id);
     setFavIds(getFavorites());
-    showToast('관심 게임에서 제거했습니다.');
+    showToast(t.toast.removed);
   }
 
   return (
@@ -24,8 +26,8 @@ export default function FavoritesPage({ onBack, onDetail }) {
                 <button className="fav-title-button" onClick={() => onDetail(game.id)}>{game.title}</button>
                 <p className="card-sub" style={{ marginBottom: 10 }}>{game.studio}</p>
                 <div className="chip-wrap">
-                  <span className="chip">{game.platformBadge}</span>
-                  {game.genre.map((g) => <span key={g} className="chip">{g}</span>)}
+                  <span className="chip">{tw(game.platformBadge)}</span>
+                  {game.genre.map((g) => <span key={g} className="chip">{tw(g)}</span>)}
                 </div>
               </div>
               <div className="fav-item-actions">
@@ -36,8 +38,8 @@ export default function FavoritesPage({ onBack, onDetail }) {
         </section>
       ) : (
         <div className="empty-state">
-          <h3>관심 등록한 게임이 없습니다.</h3>
-          <p style={{ marginTop: 8 }}>NARA 피드에서 하트를 눌러 저장해보세요.</p>
+          <h3>{t.fav.emptyTitle}</h3>
+          <p style={{ marginTop: 8 }}>{t.fav.emptyDesc}</p>
         </div>
       )}
     </>

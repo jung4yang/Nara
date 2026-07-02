@@ -3,12 +3,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 import { GENRE_QUESTIONS } from '../data/content';
+import { useLang } from '../i18n';
 
 export default function QuestionsScreen({ branchMode, selectedGenre, onBack, onComplete }) {
+  const { t } = useLang();
+  const qt = t.flow.questions;
   const questions = GENRE_QUESTIONS[selectedGenre] || [];
 
-  const title = '세계관 질문';
-  const desc = 'AI가 장르에 맞는 질문을 드립니다. 답변할수록 더 좋은 영상이 만들어집니다.';
+  const title = qt.title;
+  const desc = qt.desc;
 
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState(() => new Array(questions.length).fill(''));
@@ -36,7 +39,7 @@ export default function QuestionsScreen({ branchMode, selectedGenre, onBack, onC
         <div className="screen-title">{title}</div>
         <div className="screen-desc">{desc}</div>
 
-        <div className="q-progress">질문 {index + 1} / {questions.length}</div>
+        <div className="q-progress">{qt.progress} {index + 1} / {questions.length}</div>
         <div className="q-dots">
           {questions.map((_, i) => (
             <div key={i} className={`q-dot ${i < index ? 'done' : ''} ${i === index ? 'active' : ''}`} />
@@ -63,8 +66,8 @@ export default function QuestionsScreen({ branchMode, selectedGenre, onBack, onC
         </AnimatePresence>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={prev}><ArrowLeft size={15} /> 이전</button>
-        <button className="btn-next" onClick={next}>{isLast ? <>시놉시스 생성 <ArrowRight size={15} /></> : <>다음 <ArrowRight size={15} /></>}</button>
+        <button className="btn-back" onClick={prev}><ArrowLeft size={15} /> {t.common.back}</button>
+        <button className="btn-next" onClick={next}>{isLast ? <>{qt.genSynopsis} <ArrowRight size={15} /></> : <>{t.common.next} <ArrowRight size={15} /></>}</button>
       </div>
     </ScreenShell>
   );

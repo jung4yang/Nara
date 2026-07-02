@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Menu, X, Home, Sparkles, LayoutGrid, LogOut, LogIn } from 'lucide-react';
+import { Menu, X, Home, Sparkles, LayoutGrid, LogOut, LogIn, Globe } from 'lucide-react';
+import { useLang } from '../i18n';
 
 export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, view, onGoFeed, onGoHome, user, onLogin, onLogout, onProfileClick }) {
   const [open, setOpen] = useState(false);
+  const { lang, toggle, t } = useLang();
   const isFeed = ['feed', 'detail', 'profile', 'favorites'].includes(view);
 
   return (
@@ -20,14 +22,24 @@ export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, v
             ))}
           </div>
 
+          {/* 언어 토글 */}
+          <button
+            className="nav-lang-btn"
+            onClick={toggle}
+            aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
+            title={lang === 'ko' ? 'English' : '한국어'}
+          >
+            <Globe size={15} /> {lang === 'ko' ? 'EN' : '한'}
+          </button>
+
           {/* 로그인 / 로그아웃 (nav 직접 노출) */}
           {user ? (
             <button className="nav-logout-btn" onClick={onLogout} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <LogOut size={15} /> 로그아웃
+              <LogOut size={15} /> {t.nav.logout}
             </button>
           ) : (
             <button className="nav-login-btn" onClick={onLogin} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <LogIn size={15} /> 로그인
+              <LogIn size={15} /> {t.nav.login}
             </button>
           )}
 
@@ -73,9 +85,9 @@ export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, v
         {/* 메뉴 항목 */}
         <div style={{ display: 'flex', flexDirection: 'column', padding: '8px 0' }}>
           {[
-            { Icon: Home, label: '홈', active: view === 'landing', onClick: () => { onGoHome(); setOpen(false); } },
-            { Icon: Sparkles, label: 'AI 영상 생성', active: view === 'app', onClick: () => { onLogoClick(); setOpen(false); } },
-            { Icon: LayoutGrid, label: '퍼블리셔 피드', active: isFeed, onClick: () => { onGoFeed(); setOpen(false); } },
+            { Icon: Home, label: t.nav.home, active: view === 'landing', onClick: () => { onGoHome(); setOpen(false); } },
+            { Icon: Sparkles, label: t.nav.create, active: view === 'app', onClick: () => { onLogoClick(); setOpen(false); } },
+            { Icon: LayoutGrid, label: t.nav.feed, active: isFeed, onClick: () => { onGoFeed(); setOpen(false); } },
           ].map(({ Icon, label, active, onClick }) => (
             <button key={label} onClick={onClick} style={{
               display: 'flex', alignItems: 'center', gap: 12,
@@ -102,7 +114,7 @@ export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, v
                 {user.name}
               </button>
               <button onClick={() => { onLogout(); setOpen(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 20px', background: 'none', border: 'none', color: 'var(--text2)', fontSize: 14, cursor: 'pointer' }}>
-                <LogOut size={18} style={{ flexShrink: 0 }} /> 로그아웃
+                <LogOut size={18} style={{ flexShrink: 0 }} /> {t.nav.logout}
               </button>
             </div>
           </>

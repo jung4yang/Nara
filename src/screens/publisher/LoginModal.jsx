@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
+import { useLang } from '../../i18n';
 
 export default function LoginModal({ onClose, onLogin }) {
+  const { t } = useLang();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,12 +34,12 @@ export default function LoginModal({ onClose, onLogin }) {
             <div className="logo-holo" style={{ fontSize: 20, fontWeight: 800 }}>NARA</div>
             <button className="modal-close" onClick={onClose}><X size={20} /></button>
           </div>
-          <h2 className="modal-title">퍼블리셔 로그인</h2>
-          <p className="modal-desc">NARA 퍼블리셔 계정으로 로그인하세요.</p>
+          <h2 className="modal-title">{t.login.title}</h2>
+          <p className="modal-desc">{t.login.desc}</p>
 
           <form onSubmit={handleLogin}>
             <div className="modal-field">
-              <label>이메일</label>
+              <label>{t.login.email}</label>
               <input
                 type="email"
                 className="form-input"
@@ -47,7 +49,7 @@ export default function LoginModal({ onClose, onLogin }) {
               />
             </div>
             <div className="modal-field">
-              <label>비밀번호</label>
+              <label>{t.login.password}</label>
               <input
                 type="password"
                 className="form-input"
@@ -57,11 +59,11 @@ export default function LoginModal({ onClose, onLogin }) {
               />
             </div>
             <button type="submit" className="btn-start" style={{ width: '100%', marginTop: 16 }}>
-              로그인 <ArrowRight size={16} style={{ verticalAlign: '-3px' }} />
+              {t.login.submit} <ArrowRight size={16} style={{ verticalAlign: '-3px' }} />
             </button>
           </form>
 
-          <div className="modal-divider">또는</div>
+          <div className="modal-divider">{t.login.or}</div>
           <button className="modal-social-btn" onClick={handleLogin}>
             <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
               <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
@@ -69,9 +71,9 @@ export default function LoginModal({ onClose, onLogin }) {
               <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
               <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
             </svg>
-            Google로 계속하기
+            {t.login.google}
           </button>
-          <p className="modal-footer">계정이 없으신가요? <span style={{ color: 'var(--accent)', cursor: 'pointer' }}>회원가입</span></p>
+          <p className="modal-footer">{t.login.noAccount} <span style={{ color: 'var(--accent)', cursor: 'pointer' }}>{t.login.signup}</span></p>
         </motion.div>
       </motion.div>
     </AnimatePresence>

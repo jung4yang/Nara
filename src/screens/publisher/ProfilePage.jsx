@@ -1,6 +1,7 @@
 import { ArrowLeft, Camera, MessageCircle, MonitorPlay, Code2, Globe, Link } from 'lucide-react';
 import { getDeveloper, getGames } from './publisher';
 import GameCard from './GameCard';
+import { useLang } from '../../i18n';
 
 function LinkIcon({ label }) {
   const v = label.toLowerCase();
@@ -14,11 +15,12 @@ function LinkIcon({ label }) {
 }
 
 export default function ProfilePage({ devId, onBack, onDetail }) {
+  const { t } = useLang();
   const dev = getDeveloper(devId);
   if (!dev) return (
     <div className="empty-state" style={{ marginTop: 48 }}>
-      <h3>개발자를 찾을 수 없습니다.</h3>
-      <button className="btn" onClick={onBack}>피드로 돌아가기</button>
+      <h3>{t.profile.notFound}</h3>
+      <button className="btn" onClick={onBack}>{t.profile.backToFeedFull}</button>
     </div>
   );
 
@@ -41,22 +43,22 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
             </div>
           </div>
           <div className="stat-grid">
-            <div className="stat"><b>{dev.teamSize}</b><span>팀 규모</span></div>
-            <div className="stat"><b>{dev.experience}</b><span>개발 경력</span></div>
-            <div className="stat"><b>{dev.released}</b><span>출시 경험</span></div>
-            <div className="stat"><b>{dev.awards}</b><span>수상 경력</span></div>
+            <div className="stat"><b>{dev.teamSize}</b><span>{t.profile.teamSize}</span></div>
+            <div className="stat"><b>{dev.experience}</b><span>{t.profile.experience}</span></div>
+            <div className="stat"><b>{dev.released}</b><span>{t.profile.released}</span></div>
+            <div className="stat"><b>{dev.awards}</b><span>{t.profile.awards}</span></div>
           </div>
           <div className="two-col">
             <div className="panel">
               <div className="panel-body">
-                <p className="section-title" style={{ marginTop: 0 }}>팀 소개</p>
+                <p className="section-title" style={{ marginTop: 0 }}>{t.profile.about}</p>
                 <p className="muted">{dev.summary}</p>
-                <p className="section-title">연락처</p>
+                <p className="section-title">{t.profile.contact}</p>
                 <div className="contact-list">
-                  <p><span>전화번호</span><strong>{dev.phone}</strong></p>
-                  <p><span>이메일</span><strong>{dev.email}</strong></p>
+                  <p><span>{t.profile.phone}</span><strong>{dev.phone}</strong></p>
+                  <p><span>{t.profile.email}</span><strong>{dev.email}</strong></p>
                 </div>
-                <p className="section-title">SNS / 링크</p>
+                <p className="section-title">{t.profile.links}</p>
                 <div className="link-chip-wrap">
                   {linkItems.map((item) => <span key={item} className="link-chip"><i><LinkIcon label={item} /></i>{item}</span>)}
                 </div>
@@ -64,18 +66,18 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
             </div>
             <div className="panel">
               <div className="panel-body">
-                <p className="section-title" style={{ marginTop: 0 }}>보유 기술</p>
-                <p className="muted" style={{ marginBottom: 8 }}>개발 엔진 / 도구</p>
+                <p className="section-title" style={{ marginTop: 0 }}>{t.profile.skills}</p>
+                <p className="muted" style={{ marginBottom: 8 }}>{t.profile.engines}</p>
                 <div className="chip-wrap">{dev.engines.map((item) => <span key={item} className="chip">{item}</span>)}</div>
-                <p className="muted" style={{ marginTop: 16, marginBottom: 8 }}>AI 도구</p>
+                <p className="muted" style={{ marginTop: 16, marginBottom: 8 }}>{t.profile.aiTools}</p>
                 <div className="chip-wrap">{dev.aiTools.map((item) => <span key={item} className="chip">{item}</span>)}</div>
               </div>
             </div>
           </div>
-          <p className="section-title">업로드 영상 / 프로젝트</p>
+          <p className="section-title">{t.profile.projects}</p>
           {devGames.length > 0
             ? <div className="profile-projects">{devGames.map((game) => <GameCard key={game.id} game={game} onDetail={onDetail} />)}</div>
-            : <div className="empty-state"><p>등록된 프로젝트가 없습니다.</p></div>
+            : <div className="empty-state"><p>{t.profile.noProjects}</p></div>
           }
         </div>
       </section>

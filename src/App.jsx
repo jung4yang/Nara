@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { LayoutGrid, Heart } from 'lucide-react';
+import { useLang } from './i18n';
 import './style.css';
 import './animations.css';
 
@@ -39,6 +40,7 @@ import ShortsViewer from './screens/publisher/ShortsViewer';
 // 5:upload 6:storyboard 7:clipreview 8:export
 
 export default function App() {
+  const { t } = useLang();
   const [view, setView] = useState('landing');
   const [screenIndex, setScreenIndex] = useState(0);
   const hiwRef = useRef(null);
@@ -299,13 +301,13 @@ export default function App() {
         <div className="pub-shell">
           <main className="main">
             <div className="pub-head">
-              <p className="pub-head-label">퍼블리셔</p>
+              <p className="pub-head-label">{t.pub.publisher}</p>
               <div className="pub-tabs">
                 <button className={`pub-tab${pubView === 'feed' || pubView === 'detail' || pubView === 'profile' ? ' active' : ''}`} onClick={goFeed}>
-                  <LayoutGrid size={16} /> 피드
+                  <LayoutGrid size={16} /> {t.pub.feed}
                 </button>
                 <button className={`pub-tab${pubView === 'favorites' ? ' active' : ''}`} onClick={goFavorites}>
-                  <Heart size={16} /> 관심 게임
+                  <Heart size={16} /> {t.pub.favorites}
                 </button>
               </div>
             </div>

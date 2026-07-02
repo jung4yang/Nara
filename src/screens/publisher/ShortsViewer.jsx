@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Play, Heart, Share2, ChevronUp, ChevronDown } from 'lucide-react';
+import { useLang } from '../../i18n';
 
 const SHORTS = [
   { id: 's1', title: 'Shadow of Aria — 메인 트레일러', studio: 'DeepLight Studio', tags: ['RPG', '다크판타지'], duration: '0:30', colorClass: 'color-purple', thumbnail: '/short4.png', video: '/short_result.mp4' },
@@ -18,6 +19,7 @@ const variants = {
 };
 
 export default function ShortsViewer({ initialIndex = 0, onClose }) {
+  const { t, tw } = useLang();
   const [[activeIndex, direction], setPage] = useState([initialIndex, 0]);
   const [liked, setLiked] = useState(new Set());
 
@@ -107,9 +109,9 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
               {/* 정보 (하단 왼쪽) */}
               <div className="shorts-card-info">
                 <div className="shorts-card-tags">
-                  {active.tags.map((tag) => <span key={tag} className="chip">#{tag}</span>)}
+                  {active.tags.map((tag) => <span key={tag} className="chip">#{tw(tag)}</span>)}
                 </div>
-                <div className="shorts-card-title">{active.title}</div>
+                <div className="shorts-card-title">{(() => { const [n, l] = active.title.split(' — '); return l ? `${n} — ${tw(l)}` : n; })()}</div>
                 <div className="shorts-card-studio">{active.studio}</div>
               </div>
 
@@ -118,9 +120,9 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
                 <button className={`shorts-action-btn${liked.has(active.id) ? ' liked' : ''}`} onClick={() => toggleLike(active.id)}>
                   <Heart size={18} fill={liked.has(active.id) ? 'currentColor' : 'none'} />
                 </button>
-                <span className="shorts-action-label">관심</span>
+                <span className="shorts-action-label">{t.shorts.like}</span>
                 <button className="shorts-action-btn"><Share2 size={18} /></button>
-                <span className="shorts-action-label">공유</span>
+                <span className="shorts-action-label">{t.shorts.share}</span>
               </div>
 
               <div className="shorts-duration">{active.duration}</div>

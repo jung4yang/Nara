@@ -1,21 +1,16 @@
 import { motion } from 'framer-motion';
-
-const steps = [
-  { cat: 'ASSET', title: '캐릭터와 배경을 올려주세요', desc: '게임 에셋을 올리면 됩니다. 없으면 그냥 넘어가도 돼요. 이미지가 있을수록 영상이 정교해집니다.' },
-  { cat: 'STORY', title: '몇 가지 질문에 답해주세요', desc: '시나리오가 있으면 바로 올려주세요. 없어도 됩니다. AI 질문에 몇 가지 답하면 충분합니다.' },
-  { cat: 'FORMAT', title: '어디에 올릴 건지 고르세요', desc: '인스타그램, 틱톡, 유튜브 쇼츠 중 골라주세요. 포맷에 따라 편집 방식이 달라집니다.' },
-  { cat: 'REVIEW', title: '마음에 드는 이미지를 골라주세요', desc: 'AI가 스토리보드 이미지를 제안합니다. 마음에 들면 확정, 아니면 한 번만 바꿔주세요.' },
-  { cat: 'DONE', title: '기다리면 완성됩니다', desc: '탭을 닫아도 괜찮아요. 다 되면 알려드릴게요. 다운로드하고 SNS에 바로 올리시면 됩니다.' },
-];
+import { useLang } from '../i18n';
 
 export default function HowItWorks({ hiwRef }) {
+  const { t } = useLang();
+  const steps = t.hiw.steps;
   return (
     <div className="hiw show" id="hiw" ref={hiwRef}>
       <div className="hiw-inner">
         <div className="hiw-sticky">
-          <div className="hiw-eyebrow">HOW IT WORKS</div>
-          <div className="hiw-headline">게임만<br />만드세요.</div>
-          <div className="hiw-sub">나머지는<br />NARA가 합니다.</div>
+          <div className="hiw-eyebrow">{t.hiw.eyebrow}</div>
+          <div className="hiw-headline">{t.hiw.headline[0]}<br />{t.hiw.headline[1]}</div>
+          <div className="hiw-sub">{t.hiw.sub[0]}<br />{t.hiw.sub[1]}</div>
         </div>
         <div className="hiw-steps">
           {steps.map((s, i) => (

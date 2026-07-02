@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Clapperboard, Play } from 'lucide-react';
 import GameCard from './GameCard';
 import { filterGames, getGenreOptions } from './publisher';
+import { useLang } from '../../i18n';
 
 const PLATFORM_OPTIONS = ['전체', 'PC', '모바일', '콘솔'];
 const SORT_OPTIONS = ['최신순', '관심순'];
@@ -16,6 +17,7 @@ const SHORTS = [
 ];
 
 export default function FeedPage({ onDetail, onOpenShorts }) {
+  const { t, tw } = useLang();
   const [genre, setGenre] = useState('전체');
   const [platform, setPlatform] = useState('전체');
   const [sort, setSort] = useState('최신순');
@@ -38,8 +40,8 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
       {/* 숏폼 섹션 - 피드 상단 가로 스크롤 */}
       <div className="shorts-strip-section">
         <div className="shorts-strip-head">
-          <span className="shorts-strip-label"><Clapperboard size={16} style={{ verticalAlign: '-3px', marginRight: 6 }} />숏폼</span>
-          <span className="shorts-strip-sub">클릭해서 감상하세요</span>
+          <span className="shorts-strip-label"><Clapperboard size={16} style={{ verticalAlign: '-3px', marginRight: 6 }} />{t.feed.shorts}</span>
+          <span className="shorts-strip-sub">{t.feed.shortsSub}</span>
         </div>
         <div className="shorts-strip">
           {SHORTS.map((short, i) => (
@@ -66,25 +68,25 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
       {/* 필터 */}
       <div className="filter-row filter-row-top">
         <label className="filter-field filter-field-search">
-          <span>검색</span>
-          <input className="search-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="게임명, 스튜디오, 태그 검색" />
+          <span>{t.feed.search}</span>
+          <input className="search-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t.feed.searchPlaceholder} />
         </label>
         <label className="filter-field">
-          <span>정렬</span>
+          <span>{t.feed.sort}</span>
           <select className="select" value={sort} onChange={(e) => setSort(e.target.value)}>
-            {SORT_OPTIONS.map((v) => <option key={v}>{v}</option>)}
+            {SORT_OPTIONS.map((v) => <option key={v} value={v}>{tw(v)}</option>)}
           </select>
         </label>
         <label className="filter-field">
-          <span>장르</span>
+          <span>{t.feed.genre}</span>
           <select className="select" value={genre} onChange={(e) => setGenre(e.target.value)}>
-            {genres.map((v) => <option key={v}>{v}</option>)}
+            {genres.map((v) => <option key={v} value={v}>{tw(v)}</option>)}
           </select>
         </label>
         <label className="filter-field">
-          <span>플랫폼</span>
+          <span>{t.feed.platform}</span>
           <select className="select" value={platform} onChange={(e) => setPlatform(e.target.value)}>
-            {PLATFORM_OPTIONS.map((v) => <option key={v}>{v}</option>)}
+            {PLATFORM_OPTIONS.map((v) => <option key={v} value={v}>{tw(v)}</option>)}
           </select>
         </label>
       </div>
@@ -95,8 +97,8 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
       </section>
       {games.length === 0 && (
         <div className="empty-state">
-          <h3>게임이 없습니다</h3>
-          <p>검색어 또는 필터 조건을 다시 확인해보세요.</p>
+          <h3>{t.feed.emptyTitle}</h3>
+          <p>{t.feed.emptyDesc}</p>
         </div>
       )}
     </div>

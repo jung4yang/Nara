@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { ArrowLeft, Play, Heart, Maximize, Sparkles, Cat, Rabbit, Bird, User, PawPrint, Sprout } from 'lucide-react';
 import { getGame, getGames, getDeveloper, badgeTone, toggleFavorite, isFavorite } from './publisher';
 import { showToast } from './Toast';
+import { useLang } from '../../i18n';
 
 export default function DetailPage({ gameId, onBack, onProfile }) {
+  const { t, tw } = useLang();
   const game = getGame(gameId);
   const [videoIndex, setVideoIndex] = useState(0);
   const [saved, setSaved] = useState(isFavorite(gameId));
@@ -11,8 +13,8 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
 
   if (!game) return (
     <div className="empty-state" style={{ marginTop: 48 }}>
-      <h3>게임을 찾을 수 없습니다.</h3>
-      <button className="btn" onClick={onBack}>피드로 돌아가기</button>
+      <h3>{t.detail.notFound}</h3>
+      <button className="btn" onClick={onBack}>{t.detail.backToFeedFull}</button>
     </div>
   );
 
@@ -20,19 +22,19 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
   const relatedGames = getGames().filter((item) => item.id !== game.id && item.genre.some((tag) => game.genre.includes(tag))).slice(0, 4);
 
   const supporters = [
-    { name: '@LunaForge', Avatar: Cat, status: '퍼블리싱 검토' },
-    { name: '@PixelRabbit', Avatar: Rabbit, status: '후원' },
-    { name: '@NightOwl', Avatar: Bird, status: '후원' },
-    { name: '@BlueMint', Avatar: User, status: '퍼블리싱 검토' },
-    { name: '@ArcadeFox', Avatar: PawPrint, status: '후원' },
-    { name: '@NovaSeed', Avatar: Sprout, status: '후원' },
+    { name: '@LunaForge', Avatar: Cat, review: true },
+    { name: '@PixelRabbit', Avatar: Rabbit, review: false },
+    { name: '@NightOwl', Avatar: Bird, review: false },
+    { name: '@BlueMint', Avatar: User, review: true },
+    { name: '@ArcadeFox', Avatar: PawPrint, review: false },
+    { name: '@NovaSeed', Avatar: Sprout, review: false },
   ];
   const visibleSupporters = supportersExpanded ? supporters : supporters.slice(0, 4);
 
   function handleFavorite() {
     const added = toggleFavorite(game.id);
     setSaved(added);
-    showToast(added ? '관심 게임에 저장했습니다.' : '관심 게임에서 제거했습니다.');
+    showToast(added ? t.toast.saved : t.toast.removed);
   }
 
   return (
@@ -62,8 +64,8 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
           {relatedGames.length > 0 && (
             <div className="related-video-section">
               <div className="related-video-head">
-                <strong>관련 태그 추천 영상</strong>
-                <span>{game.genre.join(' · ')} 기반 추천</span>
+                <strong>{t.detail.relatedTitle}</strong>
+                <span>{game.genre.map(tw).join(' · ')} {t.detail.relatedSub}</span>
               </div>
               <div className="related-video-grid">
                 {relatedGames.map((item) => (
@@ -72,7 +74,7 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
                     <div>
                       <b>{item.title}</b>
                       <small>{item.studio}</small>
-                      <div className="chip-wrap">{item.genre.slice(0, 2).map((tag) => <span key={tag} className="chip">#{tag}</span>)}</div>
+                      <div className="chip-wrap">{item.genre.slice(0, 2).map((tag) => <span key={tag} className="chip">#{tw(tag)}</span>)}</div>
                     </div>
                   </button>
                 ))}
@@ -86,38 +88,38 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
             <div className="detail-developer-content">
               <span className="detail-developer-avatar">{(developer?.name ?? game.studio).slice(0, 1)}</span>
               <div className="detail-developer-copy">
-                <small>DEVELOPER PROFILE</small>
+                <small>{t.detail.devProfile}</small>
                 <strong>{developer?.name ?? game.studio}</strong>
-                <span>{developer?.field ?? '게임 개발 스튜디오'}</span>
+                <span>{developer?.field ?? t.detail.defaultStudio}</span>
               </div>
             </div>
             <div className="detail-actions">
-              {developer && <button className="btn btn-primary" onClick={() => onProfile(developer.id)}>프로필 보기</button>}
+              {developer && <button className="btn btn-primary" onClick={() => onProfile(developer.id)}>{t.detail.viewProfile}</button>}
               <button className={`heart-detail${saved ? ' saved' : ''}`} onClick={handleFavorite}><Heart size={18} fill={saved ? 'currentColor' : 'none'} /></button>
             </div>
             <div className="chip-wrap" style={{ marginBottom: 6 }}>
-              {game.genre.map((g) => <span key={g} className="chip">{g}</span>)}
-              <span className={`chip chip-${badgeTone(game.progressTone).replace('badge-', '')}`}>{game.progress}</span>
+              {game.genre.map((g) => <span key={g} className="chip">{tw(g)}</span>)}
+              <span className={`chip chip-${badgeTone(game.progressTone).replace('badge-', '')}`}>{tw(game.progress)}</span>
             </div>
             <div className="info-list">
-              <div className="info-item"><span>플랫폼</span><strong>{game.platform.join(', ')}</strong></div>
-              <div className="info-item"><span>개발 현황</span><strong>{game.progress}</strong></div>
-              <div className="info-item"><span>필요 지원</span><strong>{game.supportNeeds.join(', ')}</strong></div>
+              <div className="info-item"><span>{t.detail.platform}</span><strong>{game.platform.map(tw).join(', ')}</strong></div>
+              <div className="info-item"><span>{t.detail.progress}</span><strong>{tw(game.progress)}</strong></div>
+              <div className="info-item"><span>{t.detail.support}</span><strong>{game.supportNeeds.map(tw).join(', ')}</strong></div>
             </div>
-            <p className="section-title">게임 설명</p>
+            <p className="section-title">{t.detail.gameDesc}</p>
             <p className="muted">{game.description}</p>
-            <p className="section-title">추가 정보</p>
+            <p className="section-title">{t.detail.moreInfo}</p>
             <div className="info-list">
-              <div className="info-item"><span>팀 규모</span><strong>{game.teamSize}</strong></div>
-              <div className="info-item"><span>개발 기간</span><strong>{game.period}</strong></div>
-              <div className="info-item"><span>주요 엔진</span><strong>{game.engine}</strong></div>
-              <div className="info-item"><span>언어</span><strong>{game.language}</strong></div>
+              <div className="info-item"><span>{t.detail.teamSize}</span><strong>{game.teamSize}</strong></div>
+              <div className="info-item"><span>{t.detail.period}</span><strong>{game.period}</strong></div>
+              <div className="info-item"><span>{t.detail.engine}</span><strong>{game.engine}</strong></div>
+              <div className="info-item"><span>{t.detail.language}</span><strong>{game.language}</strong></div>
             </div>
             <section className={`supporter-card${supportersExpanded ? ' expanded' : ''}`}>
               <div className="supporter-head">
-                <div><p className="supporter-label">SUPPORT</p><strong>후원 중인 멤버</strong></div>
+                <div><p className="supporter-label">{t.detail.supportLabel}</p><strong>{t.detail.supporters}</strong></div>
                 <button className="supporter-more" onClick={() => setSupportersExpanded((o) => !o)}>
-                  {supportersExpanded ? '접기' : '더보기 ›'}
+                  {supportersExpanded ? t.detail.collapse : t.detail.more}
                 </button>
               </div>
               <div className="supporter-list">
@@ -125,12 +127,12 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
                   <div className="supporter-row" key={member.name}>
                     <span className="supporter-avatar"><member.Avatar size={18} /></span>
                     <strong>{member.name}</strong>
-                    <span className={`supporter-status ${member.status === '퍼블리싱 검토' ? 'review' : 'sponsor'}`}>{member.status}</span>
-                    <button className="supporter-message">메시지</button>
+                    <span className={`supporter-status ${member.review ? 'review' : 'sponsor'}`}>{member.review ? t.detail.review : t.detail.sponsor}</span>
+                    <button className="supporter-message">{t.detail.message}</button>
                   </div>
                 ))}
               </div>
-              <p className="supporter-note"><Sparkles size={13} style={{ verticalAlign: '-2px' }} /> NARA를 통해 후원과 퍼블리싱 검토가 이어지고 있습니다.</p>
+              <p className="supporter-note"><Sparkles size={13} style={{ verticalAlign: '-2px' }} /> {t.detail.supporterNote}</p>
             </section>
           </div>
         </aside>

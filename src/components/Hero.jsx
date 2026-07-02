@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useLang } from '../i18n';
 
 const container = {
   hidden: {},
@@ -11,6 +12,7 @@ const item = {
 };
 
 export default function Hero({ onStart, onHiw }) {
+  const { t } = useLang();
   return (
     <div className="hero">
       <div className="hero-video-wrap">
@@ -51,10 +53,12 @@ export default function Hero({ onStart, onHiw }) {
             NARA
           </span>
         </motion.h1>
-        <motion.h2 className="hero-sub-title" variants={item}>Let Your Game Stories Fly</motion.h2>
+        <motion.h2 className="hero-sub-title" variants={item}>{t.hero.subtitle}</motion.h2>
         <br />
         <motion.p className="hero-desc" variants={item}>
-          게임 에셋만 넣으면 AI가 시놉시스부터<br />숏폼 트레일러까지 자동으로 만들어드립니다.
+          {t.hero.desc.map((line, i) => (
+            <span key={i}>{line}{i < t.hero.desc.length - 1 && <br />}</span>
+          ))}
         </motion.p>
         <motion.div className="hero-btns" variants={item}>
           <motion.button
@@ -63,12 +67,12 @@ export default function Hero({ onStart, onHiw }) {
             whileHover={{ y: -2, scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
           >
-            무료로 시작하기 <ArrowRight size={16} style={{ verticalAlign: '-3px' }} />
+            {t.hero.cta} <ArrowRight size={16} style={{ verticalAlign: '-3px' }} />
           </motion.button>
         </motion.div>
       </motion.div>
       <div className="scroll-arrow" onClick={onHiw}>
-        <span>HOW IT WORKS</span>
+        <span>{t.hero.how}</span>
         <span className="scroll-arrow-icon"><ChevronDown size={18} /></span>
       </div>
     </div>

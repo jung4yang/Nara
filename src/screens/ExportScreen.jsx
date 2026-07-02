@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Clapperboard, Pencil, Download, LayoutGrid, Share2, Check, ArrowLeft } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
+import { useLang } from '../i18n';
 
 const SNS_CONTENT = {
   x: {
@@ -56,6 +57,8 @@ const SNS_ICONS = {
 };
 
 export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit, onGoFeed }) {
+  const { t } = useLang();
+  const ex = t.flow.export;
   const [tab, setTab] = useState('x');
   const [videoError, setVideoError] = useState(false);
   const [pubDone, setPubDone] = useState(false);
@@ -98,10 +101,10 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
     <ScreenShell>
       <div className="screen-wrap">
         <motion.div className="screen-title" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
-          <Clapperboard size={26} /> 결과물
+          <Clapperboard size={26} /> {ex.title}
         </motion.div>
         <div className="screen-desc">
-          {isCinematic ? '시네마틱 트레일러' : '숏폼 트레일러'}가 완성됐습니다.
+          {(isCinematic ? ex.doneCine : ex.doneShort) + ex.doneSuffix}
         </div>
 
         {/* 영상 프리뷰 */}
@@ -113,7 +116,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
           ) : (
             <>
               <Clapperboard size={48} style={{ color: 'var(--text3)' }} />
-              <span style={{ fontSize: 14, color: 'var(--text3)' }}>영상 미리보기</span>
+              <span style={{ fontSize: 14, color: 'var(--text3)' }}>{ex.preview}</span>
             </>
           )}
         </div>
@@ -122,13 +125,13 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
         {onEdit && (
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <button onClick={onEdit} style={{ padding: '10px 24px', background: 'transparent', border: '1px solid var(--accent)', borderRadius: 8, color: 'var(--accent)', fontSize: 14, cursor: 'pointer' }}>
-              <Pencil size={14} /> 수정하기 (클립 재검토)
+              <Pencil size={14} /> {ex.edit}
             </button>
           </div>
         )}
 
         {/* SNS 탭 - X / 유튜브 쇼츠 / 인스타그램 / 틱톡 */}
-        <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--text2)' }}>SNS 캡션 자동 생성</div>
+        <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--text2)' }}>{ex.snsGen}</div>
         <div className="sns-tabs">
           {TABS.map((key) => (
             <div key={key} className={`sns-tab ${tab === key ? 'active' : ''}`} onClick={() => setTab(key)} title={SNS_CONTENT[key].label} aria-label={SNS_CONTENT[key].label}>
@@ -145,22 +148,22 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
 
         {/* 버튼 3개: 다운로드 / 퍼블리셔 등록 / 공유하기 */}
         <div className="export-btns">
-          <button className="btn-export download" onClick={downloadVideo}><Download size={16} /> 영상 다운로드</button>
+          <button className="btn-export download" onClick={downloadVideo}><Download size={16} /> {ex.download}</button>
           <button
             className="btn-export sns"
             onClick={registerPublisher}
             style={pubDone ? { background: 'var(--green)', borderColor: 'var(--green)', color: 'white' } : {}}
           >
-            {pubDone ? <><Check size={16} /> 등록 완료!</> : <><LayoutGrid size={16} /> 퍼블리셔에 등록</>}
+            {pubDone ? <><Check size={16} /> {ex.registered}</> : <><LayoutGrid size={16} /> {ex.register}</>}
           </button>
           <button className="btn-export sns" onClick={share}>
-            <Share2 size={16} /> 공유하기
+            <Share2 size={16} /> {ex.share}
           </button>
         </div>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
-        <button className="btn-next" onClick={onRestart}>처음으로</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> {t.common.back}</button>
+        <button className="btn-next" onClick={onRestart}>{ex.restart}</button>
       </div>
     </ScreenShell>
   );
