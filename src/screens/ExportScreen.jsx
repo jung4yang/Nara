@@ -5,29 +5,57 @@ import ScreenShell from '../components/ScreenShell';
 import { useLang } from '../i18n';
 
 const SNS_CONTENT = {
-  x: {
-    label: '𝕏',
-    caption: '기억도 이름도 없는 소녀가 멸망한 세계에서 눈을 뜬다. 유령에게 쫓기며 잃어버린 진실을 향해 달려가는 다크 판타지 RPG. 지금 플레이해보세요.',
-    hashtags: '#인디게임 #RPG #다크판타지 #게임개발 #indiegame',
-    url: 'https://x.com',
+  cinematic: {
+    x: {
+      label: '𝕏',
+      caption: '심해 연구시설 PELAGIA-9, 모든 교신이 끊긴 그 날. 홀로 눈을 뜬 베라(Vera)는 사라진 동료 카이를 찾아 나선다. 다크판타지 비주얼노벨 "Cold Echo", 지금 만나보세요.',
+      hashtags: '#인디게임 #비주얼노벨 #다크판타지 #ColdEcho #indiegame',
+      url: 'https://x.com',
+    },
+    youtube: {
+      label: '유튜브 쇼츠',
+      caption: '【신작 인디게임】 심해 연구시설에서 눈을 뜬 베라 | 비주얼노벨 Cold Echo | 출시 예정',
+      hashtags: '#인디게임 #비주얼노벨 #게임트레일러 #ColdEcho #Shorts',
+      url: 'https://studio.youtube.com',
+    },
+    instagram: {
+      label: '인스타그램',
+      caption: '심해 연구시설 PELAGIA-9. 모든 교신이 끊긴 그 날, 홀로 눈을 뜬 베라의 정체성을 향한 추적이 시작된다. 🌊🧊\n\n당신은 진실에 다가갈 수 있을까요.',
+      hashtags: '#인디게임 #비주얼노벨 #ColdEcho #심해 #indiegame',
+      url: 'https://www.instagram.com',
+    },
+    tiktok: {
+      label: '틱톡',
+      caption: '이 게임 봤어? 🧊 심해 연구시설에서 기억 없이 깨어난 주인공이 사라진 동료를 찾는 비주얼노벨인데 분위기 미쳤음',
+      hashtags: '#인디게임 #비주얼노벨 #ColdEcho #FYP #게임틱톡커',
+      url: 'https://www.tiktok.com/upload',
+    },
   },
-  youtube: {
-    label: '유튜브 쇼츠',
-    caption: '【신작 인디게임】 기억을 잃은 소녀의 여정 | 다크 판타지 RPG | 출시 예정',
-    hashtags: '#인디게임 #RPG #게임트레일러 #신작게임 #Shorts',
-    url: 'https://studio.youtube.com',
-  },
-  instagram: {
-    label: '인스타그램',
-    caption: '기억을 잃은 소녀가 멸망한 세계에서 눈을 뜬다. 🌑✨\n\n당신의 선택이 세계의 운명을 바꿉니다.',
-    hashtags: '#인디게임 #RPG #다크판타지 #게임추천 #indiegame',
-    url: 'https://www.instagram.com',
-  },
-  tiktok: {
-    label: '틱톡',
-    caption: '이 게임 해봤어? 🤯 기억 잃은 주인공이 멸망한 세계 탐험하는 RPG인데 진짜 분위기 미쳤음',
-    hashtags: '#인디게임 #게임추천 #RPG #FYP #게임틱톡커',
-    url: 'https://www.tiktok.com/upload',
+  short: {
+    x: {
+      label: '𝕏',
+      caption: '밤이 되면 하나둘 모여드는 작은 카페. 사연을 주문하면 어울리는 커피 한 잔이 내려진다. 감성 숏폼 인디게임 "Coffee Talk", 지금 만나보세요.',
+      hashtags: '#인디게임 #숏폼 #감성게임 #CoffeeTalk #indiegame',
+      url: 'https://x.com',
+    },
+    youtube: {
+      label: '유튜브 쇼츠',
+      caption: '【신작 인디게임】 사연을 주문하는 카페 | 감성 힐링 스토리 | 출시 예정',
+      hashtags: '#인디게임 #숏폼 #힐링게임 #CoffeeTalk #Shorts',
+      url: 'https://studio.youtube.com',
+    },
+    instagram: {
+      label: '인스타그램',
+      caption: '말하지 못했던 것들이 여기서는 말이 됩니다. ☕✨\n\n오늘 밤, 당신의 이야기는 어떤 커피가 될까요.',
+      hashtags: '#인디게임 #힐링게임 #CoffeeTalk #감성 #indiegame',
+      url: 'https://www.instagram.com',
+    },
+    tiktok: {
+      label: '틱톡',
+      caption: '이 게임 알아? ☕ 사연을 말하면 그에 어울리는 커피를 내려주는 감성 게임인데 힐링 그 자체임',
+      hashtags: '#인디게임 #힐링게임 #CoffeeTalk #FYP #게임틱톡커',
+      url: 'https://www.tiktok.com/upload',
+    },
   },
 };
 
@@ -64,7 +92,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
   const [pubDone, setPubDone] = useState(false);
 
   const isCinematic = selectedFormat === 'cinematic';
-  const content = SNS_CONTENT[tab];
+  const content = SNS_CONTENT[isCinematic ? 'cinematic' : 'short'][tab];
   // 시네마틱(16:9) → sc_result, 숏폼(9:16) → short_result
   const resultVideo = isCinematic ? '/sc_result.mp4' : '/short_result.mp4';
 
@@ -134,7 +162,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
         <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--text2)' }}>{ex.snsGen}</div>
         <div className="sns-tabs">
           {TABS.map((key) => (
-            <div key={key} className={`sns-tab ${tab === key ? 'active' : ''}`} onClick={() => setTab(key)} title={SNS_CONTENT[key].label} aria-label={SNS_CONTENT[key].label}>
+            <div key={key} className={`sns-tab ${tab === key ? 'active' : ''}`} onClick={() => setTab(key)} title={SNS_CONTENT[isCinematic ? 'cinematic' : 'short'][key].label} aria-label={SNS_CONTENT[isCinematic ? 'cinematic' : 'short'][key].label}>
               {SNS_ICONS[key]}
             </div>
           ))}
