@@ -185,14 +185,14 @@ export default function App() {
         inApp={view === 'app'}
         currentScreen={screenIndex}
         totalScreens={SCREENS.length}
-        onLogoClick={goLanding}
-        onStart={startApp}
-        view={view === 'pub' ? pubView : view}
+        onLogoClick={startApp}
+        onGoHome={goLanding}
         onGoFeed={goFeed}
-        onLoginClick={() => setShowLogin(true)}
+        view={view === 'pub' ? pubView : view}
         user={user}
+        onLogin={() => setShowLogin(true)}
+        onLogout={() => setUser(null)}
         onProfileClick={() => goProfile('dev_001')}
-        
       />
       <Overlay show={overlay.show} text={overlay.text} sub={overlay.sub} />
 
