@@ -43,17 +43,29 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
         <div className="panel detail-video-panel">
           <div className="detail-game-heading">
             <h1>{game.title}</h1>
-            <p>{game.videos[videoIndex] ?? game.videos[0]}</p>
+            <p>{String(game.videos[videoIndex] ?? game.videos[0]).startsWith('/') ? '메인 트레일러' : (game.videos[videoIndex] ?? game.videos[0])}</p>
           </div>
-          <div className={`player-art ${game.colorClass}`}>
-            <div className="play-btn" style={{ width: 60, height: 60 }}><Play size={26} fill="currentColor" /></div>
-            <div className="player-controls">
-              <Play size={16} fill="currentColor" />
-              <span style={{ fontSize: 13, opacity: 0.8 }}>0:00 / 1:30</span>
-              <div className="time-bar"><span /></div>
-              <Maximize size={16} />
+          {String(game.videos[videoIndex] ?? game.videos[0]).startsWith('/') ? (
+            <div className={`player-art ${game.colorClass}`} style={{ padding: 0 }}>
+              <video
+                key={game.videos[videoIndex] ?? game.videos[0]}
+                controls
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              >
+                <source src={game.videos[videoIndex] ?? game.videos[0]} type="video/mp4" />
+              </video>
             </div>
-          </div>
+          ) : (
+            <div className={`player-art ${game.colorClass}`}>
+              <div className="play-btn" style={{ width: 60, height: 60 }}><Play size={26} fill="currentColor" /></div>
+              <div className="player-controls">
+                <Play size={16} fill="currentColor" />
+                <span style={{ fontSize: 13, opacity: 0.8 }}>0:00 / 1:30</span>
+                <div className="time-bar"><span /></div>
+                <Maximize size={16} />
+              </div>
+            </div>
+          )}
           <div className="carousel">
             {game.videos.map((name, index) => (
               <button key={index} className={`small-thumb ${game.colorClass}${index === videoIndex ? ' active-thumb' : ''}`} onClick={() => setVideoIndex(index)}>
