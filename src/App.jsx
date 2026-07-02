@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { LayoutGrid, Heart } from 'lucide-react';
 import './style.css';
 import './animations.css';
 
@@ -295,11 +296,18 @@ export default function App() {
       )}
       {view === 'pub' && (
         <div className="pub-shell">
-          <aside className="rail">
-            <button className={`rail-icon${pubView === 'feed' || pubView === 'detail' || pubView === 'profile' ? ' active' : ''}`} onClick={goFeed} title="NARA 피드">▣</button>
-            <button className={`rail-icon${pubView === 'favorites' ? ' active' : ''}`} onClick={goFavorites} title="관심 게임">♡</button>
-          </aside>
           <main className="main">
+            <div className="pub-head">
+              <p className="pub-head-label">퍼블리셔</p>
+              <div className="pub-tabs">
+                <button className={`pub-tab${pubView === 'feed' || pubView === 'detail' || pubView === 'profile' ? ' active' : ''}`} onClick={goFeed}>
+                  <LayoutGrid size={16} /> 피드
+                </button>
+                <button className={`pub-tab${pubView === 'favorites' ? ' active' : ''}`} onClick={goFavorites}>
+                  <Heart size={16} /> 관심 게임
+                </button>
+              </div>
+            </div>
             {pubView === 'feed' && <FeedPage onDetail={goDetail} onOpenShorts={openShorts} />}
             {pubView === 'detail' && <DetailPage gameId={pubGameId} onBack={goFeed} onProfile={goProfile} />}
             {pubView === 'profile' && <ProfilePage devId={pubDevId} onBack={goFeed} onDetail={goDetail} />}

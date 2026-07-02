@@ -1,14 +1,16 @@
+import { ArrowLeft, Camera, MessageCircle, MonitorPlay, Code2, Globe, Link } from 'lucide-react';
 import { getDeveloper, getGames } from './publisher';
 import GameCard from './GameCard';
 
-function getLinkIcon(label) {
+function LinkIcon({ label }) {
   const v = label.toLowerCase();
-  if (v.includes('instagram')) return '◎';
-  if (v.includes('discord')) return '◈';
-  if (v.includes('youtube')) return '▶';
-  if (v.includes('github')) return '⌘';
-  if (v.includes('x @') || v.startsWith('x ')) return '𝕏';
-  return '🔗';
+  const size = 14;
+  if (v.includes('instagram')) return <Camera size={size} />;
+  if (v.includes('discord')) return <MessageCircle size={size} />;
+  if (v.includes('youtube')) return <MonitorPlay size={size} />;
+  if (v.includes('github')) return <Code2 size={size} />;
+  if (v.includes('x @') || v.startsWith('x ')) return <Globe size={size} />;
+  return <Link size={size} />;
 }
 
 export default function ProfilePage({ devId, onBack, onDetail }) {
@@ -26,7 +28,7 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
   return (
     <>
       <div className="page-actions" style={{ padding: '20px 0 0' }}>
-        <button className="btn" onClick={onBack}>← 피드로</button>
+        <button className="btn" onClick={onBack}><ArrowLeft size={16} style={{ verticalAlign: '-3px', marginRight: 4 }} />피드로</button>
       </div>
       <section className="profile-hero">
         <div className="profile-cover" />
@@ -56,7 +58,7 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
                 </div>
                 <p className="section-title">SNS / 링크</p>
                 <div className="link-chip-wrap">
-                  {linkItems.map((item) => <span key={item} className="link-chip"><i>{getLinkIcon(item)}</i>{item}</span>)}
+                  {linkItems.map((item) => <span key={item} className="link-chip"><i><LinkIcon label={item} /></i>{item}</span>)}
                 </div>
               </div>
             </div>

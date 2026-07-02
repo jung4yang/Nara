@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 const container = {
   hidden: {},
@@ -62,13 +63,13 @@ export default function Hero({ onStart, onHiw }) {
             whileHover={{ y: -2, scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
           >
-            무료로 시작하기 →
+            무료로 시작하기 <ArrowRight size={16} style={{ verticalAlign: '-3px' }} />
           </motion.button>
         </motion.div>
       </motion.div>
       <div className="scroll-arrow" onClick={onHiw}>
         <span>HOW IT WORKS</span>
-        <span className="scroll-arrow-icon">↓</span>
+        <span className="scroll-arrow-icon"><ChevronDown size={18} /></span>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Play, Heart, Share2, ChevronUp, ChevronDown } from 'lucide-react';
 
 const SHORTS = [
   { id: 's1', title: 'Shadow of Aria — 메인 트레일러', studio: 'DeepLight Studio', tags: ['RPG', '다크판타지'], duration: '0:30', colorClass: 'color-purple' },
@@ -64,11 +65,11 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
         onMouseUp={handleTouchEnd}
       >
         {/* 닫기 */}
-        <button className="shorts-close" onClick={onClose}>←</button>
+        <button className="shorts-close" onClick={onClose}><ArrowLeft size={26} /></button>
 
         {/* 메인 카드 */}
         <div className={`shorts-card ${active.colorClass}`}>
-          <div className="shorts-card-video"><span>▶</span></div>
+          <div className="shorts-card-video"><Play size={44} fill="currentColor" /></div>
 
           {/* 진행 바 (위) */}
           <div className="shorts-top-bar">
@@ -89,10 +90,10 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
           {/* 액션 (하단 오른쪽) */}
           <div className="shorts-card-actions">
             <button className={`shorts-action-btn${liked.has(active.id) ? ' liked' : ''}`} onClick={() => toggleLike(active.id)}>
-              {liked.has(active.id) ? '♥' : '♡'}
+              <Heart size={18} fill={liked.has(active.id) ? 'currentColor' : 'none'} />
             </button>
             <span className="shorts-action-label">관심</span>
-            <button className="shorts-action-btn">↗</button>
+            <button className="shorts-action-btn"><Share2 size={18} /></button>
             <span className="shorts-action-label">공유</span>
           </div>
 
@@ -101,9 +102,8 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
 
         {/* 위아래 네비 */}
         <div className="shorts-updown">
-          <button className="shorts-nav" onClick={prev} disabled={activeIndex === 0}>↑</button>
-          <span className="shorts-hint">{activeIndex + 1} / {SHORTS.length}</span>
-          <button className="shorts-nav" onClick={next} disabled={activeIndex === SHORTS.length - 1}>↓</button>
+          <button className="shorts-nav" onClick={prev} disabled={activeIndex === 0}><ChevronUp size={18} /></button>
+          <button className="shorts-nav" onClick={next} disabled={activeIndex === SHORTS.length - 1}><ChevronDown size={18} /></button>
         </div>
       </div>
     </div>

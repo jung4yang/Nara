@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Clapperboard, Play } from 'lucide-react';
 import GameCard from './GameCard';
 import { filterGames, getGenreOptions } from './publisher';
 
@@ -37,7 +38,7 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
       {/* 숏폼 섹션 - 피드 상단 가로 스크롤 */}
       <div className="shorts-strip-section">
         <div className="shorts-strip-head">
-          <span className="shorts-strip-label">🎬 숏폼</span>
+          <span className="shorts-strip-label"><Clapperboard size={16} style={{ verticalAlign: '-3px', marginRight: 6 }} />숏폼</span>
           <span className="shorts-strip-sub">클릭해서 감상하세요</span>
         </div>
         <div className="shorts-strip">
@@ -47,7 +48,7 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
               className={`shorts-strip-card ${short.colorClass}`}
               onClick={() => onOpenShorts(i)}
             >
-              <div className="shorts-strip-play">▶</div>
+              <div className="shorts-strip-play"><Play size={26} fill="currentColor" /></div>
               <div className="shorts-strip-duration">{short.duration}</div>
               <div className="shorts-strip-info">
                 <div className="shorts-strip-title">{short.title}</div>

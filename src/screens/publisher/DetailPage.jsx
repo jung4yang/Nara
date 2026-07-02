@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ArrowLeft, Play, Heart, Maximize, Sparkles, Cat, Rabbit, Bird, User, PawPrint, Sprout } from 'lucide-react';
 import { getGame, getGames, getDeveloper, badgeTone, toggleFavorite, isFavorite } from './publisher';
 import { showToast } from './Toast';
 
@@ -19,12 +20,12 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
   const relatedGames = getGames().filter((item) => item.id !== game.id && item.genre.some((tag) => game.genre.includes(tag))).slice(0, 4);
 
   const supporters = [
-    { name: '@LunaForge', avatar: '🐱', status: '퍼블리싱 검토' },
-    { name: '@PixelRabbit', avatar: '🐰', status: '후원' },
-    { name: '@NightOwl', avatar: '🦉', status: '후원' },
-    { name: '@BlueMint', avatar: '🧢', status: '퍼블리싱 검토' },
-    { name: '@ArcadeFox', avatar: '🦊', status: '후원' },
-    { name: '@NovaSeed', avatar: '🌱', status: '후원' },
+    { name: '@LunaForge', Avatar: Cat, status: '퍼블리싱 검토' },
+    { name: '@PixelRabbit', Avatar: Rabbit, status: '후원' },
+    { name: '@NightOwl', Avatar: Bird, status: '후원' },
+    { name: '@BlueMint', Avatar: User, status: '퍼블리싱 검토' },
+    { name: '@ArcadeFox', Avatar: PawPrint, status: '후원' },
+    { name: '@NovaSeed', Avatar: Sprout, status: '후원' },
   ];
   const visibleSupporters = supportersExpanded ? supporters : supporters.slice(0, 4);
 
@@ -37,7 +38,7 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
   return (
     <>
       <div className="detail-top-actions">
-        <button className="btn" onClick={onBack}>← 피드로</button>
+        <button className="btn" onClick={onBack}><ArrowLeft size={16} style={{ verticalAlign: '-3px', marginRight: 4 }} />피드로</button>
       </div>
       <section className="detail-layout">
         <div className="panel detail-video-panel">
@@ -46,18 +47,18 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
             <p>{game.videos[videoIndex] ?? game.videos[0]}</p>
           </div>
           <div className={`player-art ${game.colorClass}`}>
-            <div className="play-btn" style={{ width: 60, height: 60, fontSize: 22 }}>▶</div>
+            <div className="play-btn" style={{ width: 60, height: 60 }}><Play size={26} fill="currentColor" /></div>
             <div className="player-controls">
-              <span>▶</span>
+              <Play size={16} fill="currentColor" />
               <span style={{ fontSize: 13, opacity: 0.8 }}>0:00 / 1:30</span>
               <div className="time-bar"><span /></div>
-              <span style={{ fontSize: 16 }}>⛶</span>
+              <Maximize size={16} />
             </div>
           </div>
           <div className="carousel">
             {game.videos.map((name, index) => (
               <button key={index} className={`small-thumb ${game.colorClass}${index === videoIndex ? ' active-thumb' : ''}`} onClick={() => setVideoIndex(index)}>
-                <div className="small-thumb-play">▶</div>
+                <div className="small-thumb-play"><Play size={14} fill="currentColor" /></div>
               </button>
             ))}
           </div>
@@ -70,7 +71,7 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
               <div className="related-video-grid">
                 {relatedGames.map((item) => (
                   <button key={item.id} className="related-video-card" onClick={() => onBack(item.id)}>
-                    <div className={`related-video-thumb ${item.colorClass}`}><span>▶</span></div>
+                    <div className={`related-video-thumb ${item.colorClass}`}><Play size={16} fill="currentColor" /></div>
                     <div>
                       <b>{item.title}</b>
                       <small>{item.studio}</small>
@@ -95,7 +96,7 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
             </div>
             <div className="detail-actions">
               {developer && <button className="btn btn-primary" onClick={() => onProfile(developer.id)}>프로필 보기</button>}
-              <button className={`heart-detail${saved ? ' saved' : ''}`} onClick={handleFavorite}>{saved ? '♥' : '♡'}</button>
+              <button className={`heart-detail${saved ? ' saved' : ''}`} onClick={handleFavorite}><Heart size={18} fill={saved ? 'currentColor' : 'none'} /></button>
             </div>
             <div className="chip-wrap" style={{ marginBottom: 6 }}>
               {game.genre.map((g) => <span key={g} className="chip">{g}</span>)}
@@ -125,14 +126,14 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
               <div className="supporter-list">
                 {visibleSupporters.map((member) => (
                   <div className="supporter-row" key={member.name}>
-                    <span className="supporter-avatar">{member.avatar}</span>
+                    <span className="supporter-avatar"><member.Avatar size={18} /></span>
                     <strong>{member.name}</strong>
                     <span className={`supporter-status ${member.status === '퍼블리싱 검토' ? 'review' : 'sponsor'}`}>{member.status}</span>
                     <button className="supporter-message">메시지</button>
                   </div>
                 ))}
               </div>
-              <p className="supporter-note"><span>✦</span> NARA를 통해 후원과 퍼블리싱 검토가 이어지고 있습니다.</p>
+              <p className="supporter-note"><Sparkles size={13} style={{ verticalAlign: '-2px' }} /> NARA를 통해 후원과 퍼블리싱 검토가 이어지고 있습니다.</p>
             </section>
           </div>
         </aside>

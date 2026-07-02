@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Play, Heart } from 'lucide-react';
 import { getGames, getFavorites, toggleFavorite } from './publisher';
 import { showToast } from './Toast';
 
@@ -21,7 +22,7 @@ export default function FavoritesPage({ onBack, onDetail }) {
         <section className="fav-list">
           {favGames.map((game) => (
             <article key={game.id} className="fav-item">
-              <button className={`fav-thumb ${game.colorClass}`} onClick={() => onDetail(game.id)}><span>▶</span></button>
+              <button className={`fav-thumb ${game.colorClass}`} onClick={() => onDetail(game.id)}><Play size={18} fill="currentColor" /></button>
               <div>
                 <button className="fav-title-button" onClick={() => onDetail(game.id)}>{game.title}</button>
                 <p className="card-sub" style={{ marginBottom: 10 }}>{game.studio}</p>
@@ -31,7 +32,7 @@ export default function FavoritesPage({ onBack, onDetail }) {
                 </div>
               </div>
               <div className="fav-item-actions">
-                <button className="heart-list saved" onClick={() => handleRemove(game.id)}>♥</button>
+                <button className="heart-list saved" onClick={() => handleRemove(game.id)}><Heart size={20} fill="currentColor" /></button>
               </div>
             </article>
           ))}
