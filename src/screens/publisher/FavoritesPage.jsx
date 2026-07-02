@@ -15,9 +15,6 @@ export default function FavoritesPage({ onBack, onDetail }) {
 
   return (
     <>
-      <div className="page-actions favorites-top-actions">
-        <button className="btn btn-primary" onClick={onBack}>피드로 돌아가기</button>
-      </div>
       {favGames.length > 0 ? (
         <section className="fav-list">
           {favGames.map((game) => (
