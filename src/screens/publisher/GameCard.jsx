@@ -13,11 +13,18 @@ export default function GameCard({ game, thumbHeight, onDetail }) {
     showToast(added ? '관심 게임에 저장했습니다.' : '관심 게임에서 제거했습니다.');
   }
 
-  const thumbStyle = game.thumbnail ? { backgroundImage: `url(${game.thumbnail})` } : undefined;
+  const thumbStyle = undefined;
 
   return (
     <article className="game-card" onClick={() => onDetail(game.id)}>
-      <div className={`thumb ${game.colorClass}${thumbHeight ? ` ${thumbHeight}` : ''}${game.thumbnail ? ' thumb-has-image' : ''}`} style={thumbStyle}>
+      <div className={`thumb ${game.colorClass}${thumbHeight ? ` ${thumbHeight}` : ''}`} style={thumbStyle}>
+        {game.thumbnail && (
+          <img
+            src={game.thumbnail}
+            alt={game.title}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        )}
         <span className="badge thumb-badge-tl">{game.platformBadge}</span>
         <span className={`badge ${badgeTone(game.progressTone)} thumb-badge-br`}>{game.progress}</span>
         <div className="play-btn"><Play size={20} fill="currentColor" /></div>
