@@ -16,12 +16,6 @@ export default function HowItWorks({ hiwRef }) {
           <div className="hiw-eyebrow">HOW IT WORKS</div>
           <div className="hiw-headline">게임만<br />만드세요.</div>
           <div className="hiw-sub">나머지는<br />NARA가 합니다.</div>
-          <div className="hiw-nara">
-            <span>N</span>arrative — 서사 자동 생성<br />
-            <span>A</span>I — 인공지능 파이프라인<br />
-            <span>R</span>each — 더 많은 유저에게<br />
-            <span>A</span>utomation — 전 과정 자동화
-          </div>
         </div>
         <div className="hiw-steps">
           {steps.map((s, i) => (

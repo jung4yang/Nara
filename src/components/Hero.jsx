@@ -47,7 +47,7 @@ export default function Hero({ onStart, onHiw }) {
         }}
       >
         <motion.h1 className="hero-title" variants={item}>
-          <span className="logo-color" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+          <span className="logo-color" style={{ fontFamily: "'Orbitron', sans-serif" }}>
             NARA
           </span>
         </motion.h1>

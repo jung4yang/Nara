@@ -72,9 +72,10 @@ nav {
 
 /* NARA 홀로그램 로고 */
 .logo-holo {
+  font-family: 'Orbitron', sans-serif;
   font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   animation: holo 4s ease-in-out infinite;
 }
 
@@ -355,7 +356,6 @@ nav {
 .hiw-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 20px; }
 .hiw-headline { font-size: 42px; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; }
 .hiw-sub { font-size: 15px; color: var(--text2); line-height: 1.7; margin-top: 12px; }
-.hiw-nara { margin-top: 28px; font-size: 13px; color: var(--text3); line-height: 2.2; }
 .hiw-nara span { color: var(--accent2); font-weight: 700; }
 
 .hiw-steps { display: flex; flex-direction: column; }
@@ -1368,8 +1368,8 @@ nav {
 /* 버튼 */
 .btn { padding: 8px 16px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 13px; cursor: pointer; }
 .btn:hover { border-color: var(--accent2); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
-.btn-primary:hover { opacity: 0.9; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #0d1420; font-weight: 700; box-shadow: 0 2px 12px rgba(159,182,209,0.32); }
+.btn-primary:hover { background: #b7c9de; }
 
 /* 토스트 */
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; font-size: 14px; z-index: 999; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
@@ -1415,12 +1415,20 @@ nav {
 
 /* Nav 로그인/프로필 */
 .nav-login-btn {
-  padding: 6px 16px; border-radius: 20px;
+  padding: 7px 18px; border-radius: 20px;
   background: var(--accent); border: none;
-  color: white; font-size: 13px; cursor: pointer;
-  transition: opacity 0.2s;
+  color: #0d1420; font-size: 13px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 14px rgba(159,182,209,0.40);
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
 }
-.nav-login-btn:hover { opacity: 0.85; }
+.nav-login-btn:hover { background: #b7c9de; box-shadow: 0 4px 20px rgba(159,182,209,0.55); transform: translateY(-1px); }
+.nav-logout-btn {
+  padding: 7px 18px; border-radius: 20px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text2); font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-logout-btn:hover { border-color: var(--accent2); color: var(--text); background: rgba(255,255,255,0.05); }
 .nav-avatar {
   width: 32px; height: 32px; border-radius: 50%;
   background: var(--accent); border: 2px solid var(--accent2);

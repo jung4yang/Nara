@@ -1,20 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, CloudFog, Footprints, Swords, Sparkles, Clapperboard, MoonStar, Flame, Zap, Trophy, ArrowLeft, ArrowRight } from 'lucide-react';
-import { CLIP_PREVIEWS, delay } from '../data/content';
+import { CLIP_PREVIEWS, STORYBOARD_CINEMATIC, delay } from '../data/content';
 
 const CLIPS     = ['/vid01.mp4','/vid02.mp4','/vid03.mp4','/vid04.mp4','/vid05.mp4'];
-const ALT_CLIPS = ['/vid01_alt.mp4','/vid02_alt.mp4','/vid03_alt.mp4','/vid04_alt.mp4','/vid05_alt.mp4'];
+// const ALT_CLIPS = ['/vid01_alt.mp4','/vid02_alt.mp4','/vid03_alt.mp4','/vid04_alt.mp4','/vid05_alt.mp4']; 수정본 추가 예정
 
 // 시네마틱용 클립 9장
 const CINEMATIC_CLIPS     = ['/sc1.mp4','/sc2.mp4','/sc3.mp4','/sc4.mp4','/sc5.mp4','/sc6.mp4','/sc7.mp4','/sc8.mp4','/sc9.mp4'];
-const CINEMATIC_ALT_CLIPS = ['/sc1_alt.mp4','/sc2_alt.mp4','/sc3_alt.mp4','/sc4_alt.mp4','/sc5_alt.mp4','/sc6_alt.mp4','/sc7_alt.mp4','/sc8_alt.mp4','/sc9_alt.mp4'];
+// const CINEMATIC_ALT_CLIPS = ['/sc1_alt.mp4','/sc2_alt.mp4','/sc3_alt.mp4','/sc4_alt.mp4','/sc5_alt.mp4','/sc6_alt.mp4','/sc7_alt.mp4','/sc8_alt.mp4','/sc9_alt.mp4']; 수정본 추가 예정
 
 const FALLBACK_ICONS = [CloudFog, Footprints, Swords, Sparkles, Clapperboard, MoonStar, Flame, Zap, Trophy];
 
 export default function ClipReviewScreen({ selectedGenre, selectedFormat, onBack, onNext }) {
     const isCinematic = selectedFormat === 'cinematic';
-    const data     = CLIP_PREVIEWS[selectedGenre] || CLIP_PREVIEWS.RPG;
+    const data     = isCinematic
+        ? (STORYBOARD_CINEMATIC[selectedGenre] || STORYBOARD_CINEMATIC.RPG)
+        : (CLIP_PREVIEWS[selectedGenre] || CLIP_PREVIEWS.RPG);
     const clips    = isCinematic ? CINEMATIC_CLIPS    : CLIPS;
     const altClips = isCinematic ? CINEMATIC_ALT_CLIPS : ALT_CLIPS;
     const count    = isCinematic ? 9 : 5;

@@ -62,6 +62,8 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
 
   const isCinematic = selectedFormat === 'cinematic';
   const content = SNS_CONTENT[tab];
+  // 시네마틱(16:9) → mainvideo, 숏폼(9:16) → short_result
+  const resultVideo = isCinematic ? '/mainvideo.mp4' : '/short_result.mp4';
 
   const videoContainerStyle = isCinematic
     ? { width: '100%', maxWidth: 640, aspectRatio: '16/9', margin: '0 auto 28px', background: '#000', borderRadius: 12, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }
@@ -69,7 +71,7 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
 
   const downloadVideo = () => {
     const a = document.createElement('a');
-    a.href = '/short_result.mp4';
+    a.href = resultVideo;
     a.download = 'NARA_trailer.mp4';
     a.click();
   };
@@ -105,8 +107,8 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
         {/* 영상 프리뷰 */}
         <div style={videoContainerStyle}>
           {!videoError ? (
-            <video autoPlay muted loop playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={() => setVideoError(true)}>
-              <source src="/short_result.mp4" type="video/mp4" />
+            <video key={resultVideo} autoPlay loop playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={() => setVideoError(true)}>
+              <source src={resultVideo} type="video/mp4" />
             </video>
           ) : (
             <>

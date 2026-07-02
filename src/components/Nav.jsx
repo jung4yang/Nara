@@ -20,16 +20,10 @@ export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, v
             ))}
           </div>
 
-          {/* 로그인 / 프로필 (nav 직접 노출) */}
+          {/* 로그인 / 로그아웃 (nav 직접 노출) */}
           {user ? (
-            <button
-              className="nav-avatar"
-              aria-label="내 프로필"
-              title={user.name}
-              onClick={onProfileClick}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              {user.name.slice(0, 1).toUpperCase()}
+            <button className="nav-logout-btn" onClick={onLogout} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <LogOut size={15} /> 로그아웃
             </button>
           ) : (
             <button className="nav-login-btn" onClick={onLogin} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
@@ -99,7 +93,7 @@ export default function Nav({ inApp, currentScreen, totalScreens, onLogoClick, v
         {/* 로그인 시에만 계정 섹션 노출 (로그인 버튼은 nav에 직접 배치) */}
         {user && (
           <>
-            <div style={{ height: 1, background: 'var(--border)', margin: '8px 20px' }} />
+            <div style={{ height: 1, background: 'var(--border)', margin: '8px 20px', marginTop: 'auto' }} />
             <div style={{ display: 'flex', flexDirection: 'column', padding: '8px 0' }}>
               <button onClick={() => { onProfileClick(); setOpen(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 20px', background: 'none', border: 'none', color: 'var(--text)', fontSize: 14, cursor: 'pointer' }}>
                 <span style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>

@@ -175,7 +175,7 @@ export default function App() {
 
   const goToClipReview = async () => {
     goTo(7);
-    showOverlay('움짤 클립 생성 중...', '확정된 컷을 짧은 영상으로 변환 중');
+    showOverlay('클립 생성 중...', '확정된 컷을 짧은 영상으로 변환 중');
     await delay(2000);
     hideOverlay();
   };
