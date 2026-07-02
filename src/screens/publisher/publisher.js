@@ -5,6 +5,26 @@
 // 게임 목록
 const GAMES = [
   {
+    id: 'game_000',
+    title: 'Cold Echo',
+    studio: 'Echo Studio',
+    developerId: 'dev_001',
+    description: '심해 연구시설 PELAGIA-9. 모든 교신이 끊긴 그 날, 홀로 눈을 뜬 베라(Vera)의 정체성을 향한 추적이 시작된다.',
+    genre: ['비주얼노벨', '다크판타지'],
+    platform: ['PC'],
+    platformBadge: 'PC',
+    progress: '개발 중',
+    progressTone: 'yellow',
+    teamSize: '5인',
+    period: '24개월',
+    engine: 'Unity',
+    language: 'C#',
+    supportNeeds: ['퍼블리셔', '투자'],
+    colorClass: 'color-purple',
+    thumbnail: '/sc5.png',
+    videos: ['/mainvideo.mp4'],
+  },
+  {
     id: 'game_001',
     title: 'Shadow of Aria',
     studio: 'DeepLight Studio',
