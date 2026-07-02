@@ -65,8 +65,8 @@ export default function ExportScreen({ selectedFormat, onBack, onRestart, onEdit
 
   const isCinematic = selectedFormat === 'cinematic';
   const content = SNS_CONTENT[tab];
-  // 시네마틱(16:9) → mainvideo, 숏폼(9:16) → short_result
-  const resultVideo = isCinematic ? '/mainvideo.mp4' : '/short_result.mp4';
+  // 시네마틱(16:9) → sc_result, 숏폼(9:16) → short_result
+  const resultVideo = isCinematic ? '/sc_result.mp4' : '/short_result.mp4';
 
   const videoContainerStyle = isCinematic
     ? { width: '100%', maxWidth: 640, aspectRatio: '16/9', margin: '0 auto 28px', background: '#000', borderRadius: 12, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }
