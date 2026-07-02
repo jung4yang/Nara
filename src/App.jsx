@@ -26,6 +26,12 @@ import {
   editSynopsisAPI,
 } from './api';
 
+import FeedPage from './screens/publisher/FeedPage';
+import DetailPage from './screens/publisher/DetailPage';
+import ProfilePage from './screens/publisher/ProfilePage';
+import FavoritesPage from './screens/publisher/FavoritesPage';
+import { Toast } from './screens/publisher/Toast';
+
 // 0:genre 1:format 2:branch 3:questions 4:synopsis
 // 5:upload 6:storyboard 7:clipreview 8:export
 
@@ -45,6 +51,16 @@ export default function App() {
   const [bgPreview, setBgPreview] = useState('');
   const [gameTitle, setGameTitle] = useState('');
   const [regenKey, setRegenKey] = useState(0);
+
+  // 퍼블리셔 피드 상태
+  const [pubView, setPubView] = useState('feed'); // 'feed' | 'detail' | 'profile' | 'favorites'
+  const [pubGameId, setPubGameId] = useState('');
+  const [pubDevId, setPubDevId] = useState('');
+
+  const goFeed = () => { setPubView('feed'); setView('pub'); };
+  const goDetail = (id) => { setPubGameId(id); setPubView('detail'); setView('pub'); };
+  const goProfile = (id) => { setPubDevId(id); setPubView('profile'); setView('pub'); };
+  const goFavorites = () => { setPubView('favorites'); setView('pub'); };
 
   const [overlay, setOverlay] = useState({ show: false, text: '', sub: '' });
   const showOverlay = (text, sub) => setOverlay({ show: true, text, sub });
@@ -148,7 +164,7 @@ export default function App() {
 
   const goToClipReview = async () => {
     goTo(7);
-    showOverlay('클립 생성 중...', '확정된 컷을 짧은 영상으로 변환 중');
+    showOverlay('움짤 클립 생성 중...', '확정된 컷을 짧은 영상으로 변환 중');
     await delay(2000);
     hideOverlay();
   };
@@ -160,7 +176,9 @@ export default function App() {
         currentScreen={screenIndex}
         totalScreens={SCREENS.length}
         onLogoClick={goLanding}
-        onStart={startApp} 
+        onStart={startApp}
+        view={view === 'pub' ? pubView : view}
+        onGoFeed={goFeed}
       />
       <Overlay show={overlay.show} text={overlay.text} sub={overlay.sub} />
 
@@ -261,6 +279,21 @@ export default function App() {
           </AnimatePresence>
         </div>
       )}
+      {view === 'pub' && (
+        <div className="pub-shell">
+          <aside className="rail">
+            <button className={`rail-icon${pubView === 'feed' || pubView === 'detail' || pubView === 'profile' ? ' active' : ''}`} onClick={goFeed} title="NARA 피드">▣</button>
+            <button className={`rail-icon${pubView === 'favorites' ? ' active' : ''}`} onClick={goFavorites} title="관심 게임">♡</button>
+          </aside>
+          <main className="main">
+            {pubView === 'feed' && <FeedPage onDetail={goDetail} />}
+            {pubView === 'detail' && <DetailPage gameId={pubGameId} onBack={goFeed} onProfile={goProfile} />}
+            {pubView === 'profile' && <ProfilePage devId={pubDevId} onBack={goFeed} onDetail={goDetail} />}
+            {pubView === 'favorites' && <FavoritesPage onBack={goFeed} onDetail={goDetail} />}
+          </main>
+        </div>
+      )}
+      <Toast />
     </>
   );
 }
