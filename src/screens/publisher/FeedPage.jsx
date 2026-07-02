@@ -6,13 +6,13 @@ import { filterGames, getGenreOptions } from './publisher';
 const PLATFORM_OPTIONS = ['전체', 'PC', '모바일', '콘솔'];
 const SORT_OPTIONS = ['최신순', '관심순'];
 
-// 숏폼 샘플 데이터
+// 숏폼 데이터 (thumbnail: 피드 표시용, video: 뷰어 재생용)
 const SHORTS = [
-  { id: 's1', title: 'Shadow of Aria', studio: 'DeepLight', duration: '0:30', colorClass: 'color-purple' },
-  { id: 's2', title: 'Neon Blade', studio: 'PixelForge', duration: '0:20', colorClass: 'color-cyan' },
-  { id: 's3', title: 'Whisper Forest', studio: 'MoonSeed', duration: '0:25', colorClass: 'color-green' },
-  { id: 's4', title: 'Void Runner', studio: 'StarBurst', duration: '0:15', colorClass: 'color-red' },
-  { id: 's5', title: 'Crystal Cave', studio: 'GemStudio', duration: '0:35', colorClass: 'color-purple' },
+  { id: 's1', title: 'Shadow of Aria', studio: 'DeepLight', duration: '0:30', colorClass: 'color-purple', thumbnail: '/short4.png', video: '/short_result.mp4' },
+  { id: 's2', title: 'Neon Blade', studio: 'PixelForge', duration: '0:20', colorClass: 'color-cyan', thumbnail: '/pub_short2.png', video: '/pub_short2.mp4' },
+  { id: 's3', title: 'Whisper Forest', studio: 'MoonSeed', duration: '0:25', colorClass: 'color-green', thumbnail: '/pub_short3.png', video: null },
+  { id: 's4', title: 'Void Runner', studio: 'StarBurst', duration: '0:15', colorClass: 'color-red', thumbnail: null, video: null },
+  { id: 's5', title: 'Crystal Cave', studio: 'GemStudio', duration: '0:35', colorClass: 'color-purple', thumbnail: null, video: null },
 ];
 
 export default function FeedPage({ onDetail, onOpenShorts }) {
@@ -47,10 +47,14 @@ export default function FeedPage({ onDetail, onOpenShorts }) {
               key={short.id}
               className={`shorts-strip-card ${short.colorClass}`}
               onClick={() => onOpenShorts(i)}
+              style={{ position: 'relative', overflow: 'hidden' }}
             >
-              <div className="shorts-strip-play"><Play size={26} fill="currentColor" /></div>
-              <div className="shorts-strip-duration">{short.duration}</div>
-              <div className="shorts-strip-info">
+              {short.thumbnail && (
+                <img src={short.thumbnail} alt={short.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }} />
+              )}
+              <div className="shorts-strip-play" style={{ zIndex: 1, position: 'relative' }}><Play size={26} fill="currentColor" /></div>
+              <div className="shorts-strip-duration" style={{ zIndex: 1 }}>{short.duration}</div>
+              <div className="shorts-strip-info" style={{ zIndex: 1 }}>
                 <div className="shorts-strip-title">{short.title}</div>
                 <div className="shorts-strip-studio">{short.studio}</div>
               </div>

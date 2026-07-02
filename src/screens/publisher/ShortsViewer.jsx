@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Play, Heart, Share2, ChevronUp, ChevronDown } from 'lucide-react';
 
 const SHORTS = [
-  { id: 's1', title: 'Shadow of Aria — 메인 트레일러', studio: 'DeepLight Studio', tags: ['RPG', '다크판타지'], duration: '0:30', colorClass: 'color-purple' },
-  { id: 's2', title: 'Neon Blade — 액션 하이라이트', studio: 'PixelForge', tags: ['액션', '사이버펑크'], duration: '0:20', colorClass: 'color-cyan' },
-  { id: 's3', title: 'Whisper Forest — 게임플레이', studio: 'MoonSeed', tags: ['퍼즐', '힐링'], duration: '0:25', colorClass: 'color-green' },
-  { id: 's4', title: 'Void Runner — 티저', studio: 'StarBurst', tags: ['로그라이크', '슈팅'], duration: '0:15', colorClass: 'color-red' },
-  { id: 's5', title: 'Crystal Cave — 예고편', studio: 'GemStudio', tags: ['어드벤처'], duration: '0:35', colorClass: 'color-purple' },
+  { id: 's1', title: 'Shadow of Aria — 메인 트레일러', studio: 'DeepLight Studio', tags: ['RPG', '다크판타지'], duration: '0:30', colorClass: 'color-purple', thumbnail: '/short4.png', video: '/short_result.mp4' },
+  { id: 's2', title: 'Neon Blade — 액션 하이라이트', studio: 'PixelForge', tags: ['액션', '사이버펑크'], duration: '0:20', colorClass: 'color-cyan', thumbnail: '/pub_short2.png', video: '/pub_short2.mp4' },
+  { id: 's3', title: 'Whisper Forest — 게임플레이', studio: 'MoonSeed', tags: ['퍼즐', '힐링'], duration: '0:25', colorClass: 'color-green', thumbnail: '/pub_short3.png', video: null },
+  { id: 's4', title: 'Void Runner — 티저', studio: 'StarBurst', tags: ['로그라이크', '슈팅'], duration: '0:15', colorClass: 'color-red', thumbnail: null, video: null },
+  { id: 's5', title: 'Crystal Cave — 예고편', studio: 'GemStudio', tags: ['어드벤처'], duration: '0:35', colorClass: 'color-purple', thumbnail: null, video: null },
 ];
 
 // 유튜브 쇼츠식 세로 슬라이드: 다음(아래로)이면 새 카드가 아래에서 올라오고, 이전이면 위에서 내려옴
@@ -83,7 +83,19 @@ export default function ShortsViewer({ initialIndex = 0, onClose }) {
                 else if (info.offset.y > 70 || info.velocity.y > 450) paginate(-1);
               }}
             >
-              <div className="shorts-card-video"><Play size={44} fill="currentColor" /></div>
+              <div className="shorts-card-video" style={{ position: 'absolute', inset: 0 }}>
+                {active.video ? (
+                  <video key={active.video} autoPlay loop playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
+                    <source src={active.video} type="video/mp4" />
+                  </video>
+                ) : active.thumbnail ? (
+                  <img src={active.thumbnail} alt={active.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Play size={44} fill="currentColor" color="rgba(255,255,255,0.5)" />
+                  </div>
+                )}
+              </div>
 
               {/* 진행 바 (위) */}
               <div className="shorts-top-bar">
