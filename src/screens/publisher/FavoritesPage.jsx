@@ -38,7 +38,6 @@ export default function FavoritesPage({ onBack, onDetail }) {
         <div className="empty-state">
           <h3>관심 등록한 게임이 없습니다.</h3>
           <p style={{ marginTop: 8 }}>NARA 피드에서 하트를 눌러 저장해보세요.</p>
-          <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={onBack}>피드 보러 가기</button>
         </div>
       )}
     </>

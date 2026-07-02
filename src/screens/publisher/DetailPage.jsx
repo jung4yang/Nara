@@ -37,9 +37,6 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
 
   return (
     <>
-      <div className="detail-top-actions">
-        <button className="btn" onClick={onBack}><ArrowLeft size={16} style={{ verticalAlign: '-3px', marginRight: 4 }} />피드로</button>
-      </div>
       <section className="detail-layout">
         <div className="panel detail-video-panel">
           <div className="detail-game-heading">
