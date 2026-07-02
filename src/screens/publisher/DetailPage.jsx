@@ -95,10 +95,18 @@ export default function DetailPage({ gameId, onBack, onProfile }) {
           )}
         </div>
         <aside className="panel detail-side">
-          <div className={`detail-developer-cover ${game.colorClass}`} />
+          {developer?.cover ? (
+            <div className="detail-developer-cover" style={{ backgroundImage: `url(${developer.cover})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          ) : (
+            <div className={`detail-developer-cover ${game.colorClass}`} />
+          )}
           <div className="panel-body">
             <div className="detail-developer-content">
-              <span className="detail-developer-avatar">{(developer?.name ?? game.studio).slice(0, 1)}</span>
+              {developer?.avatar ? (
+                <img className="detail-developer-avatar detail-developer-avatar-img" src={developer.avatar} alt={developer.name} />
+              ) : (
+                <span className="detail-developer-avatar">{(developer?.name ?? game.studio).slice(0, 1)}</span>
+              )}
               <div className="detail-developer-copy">
                 <small>{t.detail.devProfile}</small>
                 <strong>{developer?.name ?? game.studio}</strong>
