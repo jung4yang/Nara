@@ -96,15 +96,10 @@ export default function App() {
       goTo(4); // synopsis
       setSynopsisLoading(true);
       showOverlay('시놉시스 정리 중...', '업로드한 시나리오를 요약하고 있습니다');
-      try {
-        const text = scenarioText.trim() || `(파일 업로드됨: ${scenarioFile})`;
-        const result = await summarizeSynopsisAPI(text, selectedGenre, selectedFormat);
-        setSynopsis(result);
-      } catch (err) {
-        console.error('시놉시스 요약 실패:', err);
-        setSynopsis(SYNOPSIS[selectedGenre] || SYNOPSIS.RPG);
-      }
+      await delay(2000);
       hideOverlay();
+      // 시연용 고정 시놉시스 (시네마틱 — PELAGIA-9)
+      setSynopsis(`심해 연구시설 PELAGIA-9. 한때 인류의 미래를 바꿀 기술 "Reflect"를 연구하던 이곳은, 어느 날을 기점으로 모든 교신이 끊겼다.\n\n침묵한 시설에 홀로 눈을 뜬 존재, 베라(Vera). 그녀에게 남은 단서는 단 하나 — 실종된 동료 카이(Kai)를 찾아야 한다는 사실뿐이다.\n\n지지직거리는 CCTV 화면 너머로 처음 깨어난 순간부터, 베라는 자신이 무엇이었는지조차 확신할 수 없다. 복도 벽에 누군가 다급하게 남긴 낙서 — "FIND KAI" — 만이 유일한 이정표가 되어준다.\n\n시설 깊은 곳으로 향할수록, 침묵 속에 도사린 무언가의 기척이 점점 가까워진다. 이것은 구조 임무가 아니다. Reflect가 남긴 메아리를 따라가는, 정체성을 향한 추적이다.`);
       setSynopsisLoading(false);
     } else {
       goTo(3); // questions
@@ -115,14 +110,10 @@ export default function App() {
     goTo(4); // synopsis
     setSynopsisLoading(true);
     showOverlay('AI가 시놉시스를 작성 중...', '답변을 바탕으로 서사 구성 중');
-    try {
-      const result = await generateSynopsisAPI(answers, selectedGenre, selectedFormat);
-      setSynopsis(result);
-    } catch (err) {
-      console.error('시놉시스 생성 실패:', err);
-      setSynopsis(SYNOPSIS[selectedGenre] || SYNOPSIS.RPG);
-    }
+    await delay(2000);
     hideOverlay();
+    // 시연용 고정 시놉시스 (숏폼 — Coffee Talk)
+    setSynopsis(`시애틀에 어둠이 내리면, 하루 동안 각자의 걱정과 고민을 짊어졌던 이들이 하나둘 작은 카페로 모여든다.\n\n이곳의 규칙은 단순하다. 주문은 말이 아니라 사연으로 받는다. 손님이 오늘 있었던 일을, 마음에 걸리는 고민을, 혹은 그저 하루의 피로를 털어놓으면 — 바리스타는 그 이야기에 어울리는 한 잔을 조용히 내린다.\n\n말하지 못했던 것들이 여기서는 말이 된다. 밤은 깊어가지만, 이 카페의 불은 꺼지지 않는다. 오늘 밤도 누군가의 이야기가, 한 잔의 커피가 되어 흘러간다.`);
     setSynopsisLoading(false);
   };
 
