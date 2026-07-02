@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FileText, MessagesSquare, FolderUp } from 'lucide-react';
+import { FileText, MessagesSquare, FolderUp, Check, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 
 export default function BranchScreen({
@@ -58,7 +58,7 @@ export default function BranchScreen({
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>파일 업로드</div>
               <div style={{ fontSize: 12, color: 'var(--text3)' }}>PDF, TXT, DOCX 지원</div>
               {scenarioFile && (
-                <div style={{ fontSize: 13, color: 'var(--green)', marginTop: 8 }}>✓ {scenarioFile}</div>
+                <div style={{ fontSize: 13, color: 'var(--green)', marginTop: 8 }}><Check size={14} /> {scenarioFile}</div>
               )}
             </div>
             <div style={{ textAlign: 'center', color: 'var(--text3)', fontSize: 13, margin: '12px 0' }}>또는 직접 입력</div>
@@ -72,9 +72,9 @@ export default function BranchScreen({
         )}
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}>← 이전</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
         <button className="btn-next" disabled={!canNext} onClick={onNext}>
-          {branchMode === 'has' ? '분석 시작 →' : '시작하기 →'}
+          {branchMode === 'has' ? <>분석 시작 <ArrowRight size={15} /></> : <>시작하기 <ArrowRight size={15} /></>}
         </button>
       </div>
     </ScreenShell>

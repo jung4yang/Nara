@@ -27,9 +27,9 @@ export default function ProfilePage({ devId, onBack, onDetail }) {
 
   return (
     <>
-      <div className="page-actions" style={{ padding: '20px 0 0' }}>
+      {/* <div className="page-actions" style={{ padding: '20px 0 0' }}>
         <button className="btn" onClick={onBack}><ArrowLeft size={16} style={{ verticalAlign: '-3px', marginRight: 4 }} />피드로</button>
-      </div>
+      </div> */}
       <section className="profile-hero">
         <div className="profile-cover" />
         <div className="profile-content">

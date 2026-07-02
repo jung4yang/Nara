@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Moon, Zap, Sword, Sparkles, Clapperboard, MoonStar, Flame, Swords, Trophy, ArrowRight } from 'lucide-react';
 import { STORYBOARD, STORYBOARD_CINEMATIC, delay } from '../data/content';
 
 // 숏폼용 (5장 세로)
@@ -14,7 +14,7 @@ const CINEMATIC_IMAGES = [
   '/sc7.png','/sc8.png','/sc9.png',
 ];
 
-const FALLBACK_EMOJI = ['🌑','⚡','🗡️','✨','🎬','🌙','🔥','⚔️','🏆'];
+const FALLBACK_ICONS = [Moon, Zap, Sword, Sparkles, Clapperboard, MoonStar, Flame, Swords, Trophy];
 
 export default function StoryboardScreen({ selectedGenre, selectedFormat, onRegenAll, onGenerateVideo, regenKey }) {
   const isCinematic = selectedFormat === 'cinematic';
@@ -129,7 +129,7 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
                     />
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8, background: 'linear-gradient(135deg,#1e1a3a,#2d1f4a)' }}>
-                      <span style={{ fontSize: isCinematic ? 40 : 32 }}>{FALLBACK_EMOJI[i] || '🎬'}</span>
+                      {(() => { const Ic = FALLBACK_ICONS[i] || Clapperboard; return <Ic size={isCinematic ? 40 : 32} style={{ color: 'var(--text3)' }} />; })()}
                       <span style={{ fontSize: 11, color: 'var(--text3)' }}>이미지 없음</span>
                     </div>
                   )}
@@ -161,7 +161,7 @@ export default function StoryboardScreen({ selectedGenre, selectedFormat, onRege
 
       <div className="sb-float-btns">
         <motion.button className="btn-regen" onClick={onRegenAll} whileTap={{ scale: 0.96 }}>전체 재생성</motion.button>
-        <motion.button className="btn-gen-video" onClick={onGenerateVideo} disabled={!allLiked} whileHover={allLiked ? { scale: 1.03 } : {}} whileTap={allLiked ? { scale: 0.97 } : {}}>영상 생성 →</motion.button>
+        <motion.button className="btn-gen-video" onClick={onGenerateVideo} disabled={!allLiked} whileHover={allLiked ? { scale: 1.03 } : {}} whileTap={allLiked ? { scale: 0.97 } : {}}>영상 생성 <ArrowRight size={15} /></motion.button>
       </div>
 
       <AnimatePresence>

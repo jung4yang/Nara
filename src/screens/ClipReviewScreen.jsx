@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, CloudFog, Footprints, Swords, Sparkles, Clapperboard, MoonStar, Flame, Zap, Trophy, ArrowLeft, ArrowRight } from 'lucide-react';
 import { CLIP_PREVIEWS, delay } from '../data/content';
 
 const CLIPS     = ['/vid01.mp4','/vid02.mp4','/vid03.mp4','/vid04.mp4','/vid05.mp4'];
@@ -10,7 +10,7 @@ const ALT_CLIPS = ['/vid01_alt.mp4','/vid02_alt.mp4','/vid03_alt.mp4','/vid04_al
 const CINEMATIC_CLIPS     = ['/sc1.mp4','/sc2.mp4','/sc3.mp4','/sc4.mp4','/sc5.mp4','/sc6.mp4','/sc7.mp4','/sc8.mp4','/sc9.mp4'];
 const CINEMATIC_ALT_CLIPS = ['/sc1_alt.mp4','/sc2_alt.mp4','/sc3_alt.mp4','/sc4_alt.mp4','/sc5_alt.mp4','/sc6_alt.mp4','/sc7_alt.mp4','/sc8_alt.mp4','/sc9_alt.mp4'];
 
-const FALLBACK_EMOJI = ['🌫️','🏃','⚔️','✨','🎬','🌙','🔥','💥','🏆'];
+const FALLBACK_ICONS = [CloudFog, Footprints, Swords, Sparkles, Clapperboard, MoonStar, Flame, Zap, Trophy];
 
 export default function ClipReviewScreen({ selectedGenre, selectedFormat, onBack, onNext }) {
     const isCinematic = selectedFormat === 'cinematic';
@@ -113,7 +113,7 @@ export default function ClipReviewScreen({ selectedGenre, selectedFormat, onBack
                                         />
                                     ) : (
                                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8, background: 'linear-gradient(135deg,#1e1a3a,#2d1f4a)' }}>
-                                            <span style={{ fontSize: isCinematic ? 40 : 32 }}>{FALLBACK_EMOJI[i] || '🎬'}</span>
+                                            {(() => { const Ic = FALLBACK_ICONS[i] || Clapperboard; return <Ic size={isCinematic ? 40 : 32} style={{ color: 'var(--text3)' }} />; })()}
                                             <span style={{ fontSize: 11, color: 'var(--text3)' }}>클립 없음</span>
                                         </div>
                                     )}
@@ -145,8 +145,8 @@ export default function ClipReviewScreen({ selectedGenre, selectedFormat, onBack
             </div>
 
             <div className="bottom-nav" style={{ position: 'sticky', bottom: 0, background: 'var(--bg)' }}>
-                <button className="btn-back" onClick={onBack}>← 이전</button>
-                <button className="btn-next" disabled={!allLiked} onClick={onNext}>최종 영상 생성 →</button>
+                <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
+                <button className="btn-next" disabled={!allLiked} onClick={onNext}>최종 영상 생성 <ArrowRight size={15} /></button>
             </div>
 
             {/* 말풍선 패널 */}

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Swords, Zap, Ghost, Puzzle, Dices, Castle, Heart, Gamepad2, Globe } from 'lucide-react';
+import { Swords, Zap, Ghost, Puzzle, Dices, Castle, Heart, Gamepad2, Globe, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 import { GENRES } from '../data/content';
 
@@ -40,8 +40,8 @@ export default function GenreScreen({ selectedGenre, setSelectedGenre, onBack, o
         <div style={{ fontSize: 13, color: 'var(--text3)', marginTop: 8 }}>가장 가까운 장르를 골라도 괜찮아요.</div>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}>← 이전</button>
-        <button className="btn-next" disabled={!selectedGenre} onClick={onNext}>다음 →</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
+        <button className="btn-next" disabled={!selectedGenre} onClick={onNext}>다음 <ArrowRight size={15} /></button>
       </div>
     </ScreenShell>
   );

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Clapperboard, Smartphone } from 'lucide-react';
+import { Clapperboard, Smartphone, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 
 export default function FormatScreen({ selectedFormat, setSelectedFormat, onBack, onNext }) {
@@ -46,8 +46,8 @@ export default function FormatScreen({ selectedFormat, setSelectedFormat, onBack
         </div>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}>← 이전</button>
-        <button className="btn-next" disabled={!selectedFormat} onClick={onNext}>다음 →</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
+        <button className="btn-next" disabled={!selectedFormat} onClick={onNext}>다음 <ArrowRight size={15} /></button>
       </div>
     </ScreenShell>
   );

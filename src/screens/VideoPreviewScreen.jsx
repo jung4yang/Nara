@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Share2, Pencil, Clapperboard } from 'lucide-react';
+import { Download, Share2, Pencil, Clapperboard, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 
 export default function VideoPreviewScreen({ selectedFormat, onEdit, onNext, onRestart }) {
@@ -66,8 +66,8 @@ export default function VideoPreviewScreen({ selectedFormat, onEdit, onNext, onR
             </div>
 
             <div className="bottom-nav">
-                <button className="btn-back" onClick={onRestart}>← 처음으로</button>
-                <button className="btn-next" onClick={onNext}>공유 페이지로 →</button>
+                <button className="btn-back" onClick={onRestart}><ArrowLeft size={15} /> 처음으로</button>
+                <button className="btn-next" onClick={onNext}>공유 페이지로 <ArrowRight size={15} /></button>
             </div>
         </ScreenShell>
     );

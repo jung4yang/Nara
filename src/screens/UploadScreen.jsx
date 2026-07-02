@@ -1,4 +1,4 @@
-import { UserRound, Image as ImageIcon } from 'lucide-react';
+import { UserRound, Image as ImageIcon, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 
 export default function UploadScreen({
@@ -41,8 +41,8 @@ export default function UploadScreen({
         </div>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}>← 이전</button>
-        <button className="btn-next" onClick={onNext}>다음 →</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
+        <button className="btn-next" onClick={onNext}>다음 <ArrowRight size={15} /></button>
       </div>
     </ScreenShell>
   );

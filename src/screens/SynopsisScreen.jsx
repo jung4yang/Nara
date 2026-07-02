@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { RefreshCw, ThumbsDown } from 'lucide-react';
+import { RefreshCw, ThumbsDown, Check, ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 
 export default function SynopsisScreen({
@@ -36,8 +36,8 @@ export default function SynopsisScreen({
         </div>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={onBack}>← 이전</button>
-        <button className="btn-next" onClick={onNext} disabled={loading}>다음 →</button>
+        <button className="btn-back" onClick={onBack}><ArrowLeft size={15} /> 이전</button>
+        <button className="btn-next" onClick={onNext} disabled={loading}>다음 <ArrowRight size={15} /></button>
       </div>
     </ScreenShell>
   );
@@ -62,7 +62,7 @@ function PromptEdit({ onApply }) {
           onChange={(e) => setValue(e.target.value)}
         />
         <button className="btn-secondary" onClick={() => { if (value.trim()) { onApply(value); setValue(''); setOpen(false); } }}>
-          ✓ 적용하기
+          <Check size={14} /> 적용하기
         </button>
       </div>
     </>

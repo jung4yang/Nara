@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import ScreenShell from '../components/ScreenShell';
 import { GENRE_QUESTIONS } from '../data/content';
 
@@ -62,8 +63,8 @@ export default function QuestionsScreen({ branchMode, selectedGenre, onBack, onC
         </AnimatePresence>
       </div>
       <div className="bottom-nav">
-        <button className="btn-back" onClick={prev}>← 이전</button>
-        <button className="btn-next" onClick={next}>{isLast ? '시놉시스 생성 →' : '다음 →'}</button>
+        <button className="btn-back" onClick={prev}><ArrowLeft size={15} /> 이전</button>
+        <button className="btn-next" onClick={next}>{isLast ? <>시놉시스 생성 <ArrowRight size={15} /></> : <>다음 <ArrowRight size={15} /></>}</button>
       </div>
     </ScreenShell>
   );
